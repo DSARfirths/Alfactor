@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Servicios - Alfactor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilo simple para imprimir */
+        @media print {
+            .no-print { display: none; }
+            body { -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="propuesta" class="container mx-auto max-w-4xl my-12 p-10 bg-white shadow-2xl rounded-lg">
+        <header class="flex justify-between items-center pb-6 border-b-2 border-gray-200">
+            <div>
+                <h1 class="text-4xl font-bold text-blue-600">Alfactor</h1>
+                <p class="text-gray-600">Propuesta de Servicios Digitales</p>
+            </div>
+            <div class="text-right">
+                <p><strong>Fecha:</strong> <span id="fecha-actual"></span></p>
+                <p><strong>Propuesta #:</strong> ALF-2025-001</p>
+            </div>
+        </header>
+
+        <main class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Detalle de Servicios Contratados</h2>
+            
+            <div id="detalle-servicios" class="space-y-4">
+                </div>
+
+            <div class="mt-10 pt-6 border-t-2 border-dashed">
+                <h3 class="text-xl font-semibold mb-4">Resumen de Inversión</h3>
+                <div class="max-w-sm ml-auto space-y-3">
+                    <p class="flex justify-between text-lg"><span>Pagos Únicos (Setup):</span> <strong id="total-unico-contrato" class="text-blue-600">S/ 0.00</strong></p>
+                    <p class="flex justify-between text-lg"><span>Pagos Recurrentes (Mensual):</span> <strong id="total-recurrente-contrato" class="text-blue-600">S/ 0.00/mes</strong></p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-sm text-gray-500">
+                <h4 class="font-bold mb-2">Términos y Condiciones</h4>
+                <p>1. La presente propuesta tiene una validez de 15 días.</p>
+                <p>2. El pago inicial corresponde al 50% de los "Pagos Únicos". El 50% restante se abonará a la entrega del proyecto.</p>
+                <p>3. Los pagos recurrentes se facturarán de forma mensual, con un ciclo de pago del 1 al 5 de cada mes.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="container mx-auto max-w-4xl text-center mb-12 no-print">
+        <button onclick="window.print()" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-all">
+            Imprimir o Guardar como PDF
+        </button>
+        <a href="index.html" class="ml-4 bg-gray-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-gray-600 transition-all">
+            Volver al Cotizador
+        </a>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/contrato.js"></script>
+
+</body>
+</html>
