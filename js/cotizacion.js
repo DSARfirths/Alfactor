@@ -56,8 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('hidden-total-unico').value = formatCurrency(totalUnico);
     document.getElementById('hidden-total-recurrente').value = `${formatCurrency(totalRecurrente)}/mes`;
 
-    // 2. Construir y establecer la URL de redirección a WhatsApp para Formspree
-    const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta de servicios a través de su página web. Mis datos ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+    // 2. Construir dinámicamente la URL de redirección a WhatsApp para Formspree
+    const listaServiciosWhatsApp = serviciosSeleccionados.map(s => 
+        `- ${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`
+    ).join('\n');
+
+    const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta desde la web. Este es un resumen:\n\n*Servicios Contratados:*\n${listaServiciosWhatsApp}\n\n*Inversión Total:*\nPago Único: ${formatCurrency(totalUnico)}\nPago Mensual: ${formatCurrency(totalRecurrente)}/mes\n\nMis datos de contacto ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+    
     const urlWhatsApp = `https://wa.me/${tuNumeroDeWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-    document.getElementById('hidden-next-url').value = urlWhatsApp;
+    
+    // Asignamos la URL al campo oculto '_next' que usará Formspree para redirigir.
+    const nextUrlInput = document.getElementById('hidden-next-url');
+    if (nextUrlInput) {
+        nextUrlInput.value = urlWhatsApp;
+    } else {
+        console.error('El campo oculto con id "hidden-next-url" no se encontró en el HTML. La redirección a WhatsApp no funcionará.');
+    }
 });
