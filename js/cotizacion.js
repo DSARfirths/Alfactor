@@ -3,10 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const params = new URLSearchParams(window.location.search);
     const serviciosIds = params.get('servicios')?.split(',') || [];
-    const detalleContainer = document.getElementById('detalle-servicios');
+    const detalleContainer = document.getElementById('detalle-servicios-body');
 
     if (serviciosIds.length === 0) {
-        detalleContainer.innerHTML = '<p class="text-red-500 text-center">No se han seleccionado servicios. Por favor, vuelve al cotizador.</p>';
+        // Deshabilitar botones si no hay servicios
+        document.querySelector('.btn-aceptar-propuesta').disabled = true;
+        document.querySelector('.btn-descargar-pdf').disabled = true;
+        detalleContainer.innerHTML = '<tr><td colspan="3" class="text-red-500 text-center py-4">No se han seleccionado servicios. Por favor, vuelve al cotizador.</td></tr>';
         return;
     }
     
@@ -21,16 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
     detalleContainer.innerHTML = '';
     serviciosSeleccionados.forEach(servicio => {
         const servicioHTML = `
-            <div class="p-4 border rounded-lg bg-gray-50 flex justify-between items-center">
-                <div>
-                    <h4 class="font-bold text-lg">${servicio.nombre}</h4>
-                    <p class="text-gray-600">${servicio.descripcion}</p>
-                </div>
-                <div class="text-right flex-shrink-0 ml-4">
-                    <p class="font-bold text-lg">${formatCurrency(servicio.precio)}</p>
-                    <span class="text-sm ${servicio.tipo === 'recurrente' ? 'text-red-500' : 'text-green-600'}">${servicio.tipo === 'recurrente' ? 'Pago Mensual' : 'Pago Único'}</span>
-                </div>
-            </div>
+            <tr>
+                <td>
+                    <p class="font-bold">${servicio.nombre}</p>
+                    <p class="text-sm text-gray-500">${servicio.descripcion}</p>
+                </td>
+                <td class="text-center">
+                    <span class="text-xs font-semibold px-2 py-1 rounded-full ${servicio.tipo === 'recurrente' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}">
+                        ${servicio.tipo === 'recurrente' ? 'Mensual' : 'Único'}
+                    </span>
+                </td>
+                <td class="text-right font-bold text-gray-800">${formatCurrency(servicio.precio)}</td>
+            </tr>
         `;
         detalleContainer.innerHTML += servicioHTML;
     });
@@ -39,17 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('total-recurrente-contrato').textContent = `${formatCurrency(totalRecurrente)}/mes`;
     document.getElementById('fecha-actual').textContent = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // --- LÓGICA DE WHATSAPP ---
-    const tuNumeroDeWhatsApp = '51924281623'; // ¡IMPORTANTE! Reemplaza con tu número.
-    let mensaje = `¡Hola Alfactor! 👋\n\nEstoy interesado(a) en contratar los siguientes servicios según la cotización de su sitio web:\n\n`;
-    serviciosSeleccionados.forEach(s => {
-        mensaje += `• *${s.nombre}* (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})\n`;
-    });
-    mensaje += `\n*Resumen de Inversión:*\n`;
-    mensaje += `Pagos Únicos: *${formatCurrency(totalUnico)}*\n`;
-    mensaje += `Pagos Mensuales: *${formatCurrency(totalRecurrente)}/mes*\n\n`;
-    mensaje += `Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+    // --- LÓGICA DEL FORMULARIO Y REDIRECCIÓN A WHATSAPP ---
+    const tuNumeroDeWhatsApp = '51924281623';
 
-    const mensajeCodificado = encodeURIComponent(mensaje);
-    document.getElementById('btn-whatsapp').href = `https://wa.me/${tuNumeroDeWhatsApp}?text=${mensajeCodificado}`;
+    // 1. Poblar campos ocultos del formulario para Formspree
+    const serviciosParaForm = serviciosSeleccionados.map(s =>
+        `${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`
+    ).join('; ');
+
+    document.getElementById('hidden-servicios').value = serviciosParaForm;
+    document.getElementById('hidden-total-unico').value = formatCurrency(totalUnico);
+    document.getElementById('hidden-total-recurrente').value = `${formatCurrency(totalRecurrente)}/mes`;
+
+    // 2. Construir y establecer la URL de redirección a WhatsApp para Formspree
+    const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta de servicios a través de su página web. Mis datos ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+    const urlWhatsApp = `https://wa.me/${tuNumeroDeWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    document.getElementById('hidden-next-url').value = urlWhatsApp;
 });

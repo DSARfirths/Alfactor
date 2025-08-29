@@ -18,9 +18,32 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .fade-in-up {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            }
+            .fade-in-up.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .filtro-btn {
+            @apply flex items-center px-5 py-2 text-sm sm:text-base font-semibold text-gray-700 bg-white border-2 border-gray-200 rounded-full transition-all duration-200 shadow-sm hover:border-blue-500 hover:shadow-md transform hover:-translate-y-1 active:scale-95 active:shadow-inner;
+        }
+        .filtro-btn.active {
+            @apply bg-blue-600 text-white border-blue-600 shadow-lg -translate-y-1 hover:border-blue-600;
+        }
+        #proyectos-grid {
+            transition: opacity 0.4s ease-in-out;
+        }
+    </style>
 
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 
 <body class="bg-gray-50 text-gray-800">
 
@@ -33,20 +56,20 @@
     </header>
 
     <main class="container mx-auto px-6 py-16">
-        <section id="bienvenida" class="text-center">
+        <section id="bienvenida" class="text-center fade-in-up">
             <h2 class="text-3xl font-bold mb-4">Empecemos por el principio</h2>
             <p class="text-lg text-gray-500 max-w-2xl mx-auto">Para darte la mejor solución, cuéntanos, ¿qué tipo de
                 negocio tienes?</p>
 
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
-                <a href="selector.html?perfil=catalogo" class="perfil-card-link">
+                <a href="selector.html?perfil=catalogo" class="perfil-card-link fade-in-up">
                     <div
                         class="bg-white p-8 rounded-xl shadow-lg border-2 border-transparent transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-blue-500">
                         <h3 class="text-2xl font-bold text-blue-600">🛒 Negocio de Catálogo</h3>
                         <p class="mt-2 text-gray-600">Servicios, consultores, B2B, productos de alto valor.</p>
                     </div>
                 </a>
-                <a href="selector.html?perfil=retail" class="perfil-card-link">
+                <a href="selector.html?perfil=retail" class="perfil-card-link fade-in-up">
                     <div
                         class="bg-white p-8 rounded-xl shadow-lg border-2 border-transparent transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-blue-500">
                         <h3 class="text-2xl font-bold text-blue-600">🏪 Negocio Retail</h3>
@@ -56,19 +79,17 @@
             </div>
         </section>
 
-        <section id="proyectos" class="mt-24">
+        <section id="proyectos" class="mt-24 fade-in-up">
             <div class="text-center">
                 <h2 class="text-3xl font-bold mb-4">Proyectos Realizados</h2>
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto">Experiencia real, resultados tangibles.</p>
             </div>
 
             <div id="filtros-proyectos" class="flex justify-center flex-wrap gap-2 sm:gap-4 my-8">
-                <button class="filtro-btn active" data-filtro="Todos">Ver Todos</button>
-                <button class="filtro-btn" data-filtro="Desarrollo Web">Desarrollo Web</button>
-                <button class="filtro-btn" data-filtro="Catálogo Digital">Catálogos Digitales</button>
-                <button class="filtro-btn" data-filtro="SEO Local">SEO Local</button>
-            </div>
-
+                <button class="filtro-btn active" data-filtro="Todos"><i class="fa-solid fa-layer-group fa-fw mr-2"></i>Ver Todos</button>
+                <button class="filtro-btn" data-filtro="Desarrollo Web"><i class="fa-solid fa-code fa-fw mr-2"></i>Desarrollo Web</button>
+                <button class="filtro-btn" data-filtro="Catálogo Digital"><i class="fa-solid fa-book-open fa-fw mr-2"></i>Catálogos Digitales</button>
+                <button class="filtro-btn" data-filtro="SEO Local"><i class="fa-solid fa-location-dot fa-fw mr-2"></i>SEO Local</button>
             <div id="proyectos-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
         </section>
@@ -79,6 +100,7 @@
             <p class="mt-2">Diseñado y desarrollado por Alfactor Consultores.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
     <script src="js/database.js"></script>
     <script src="js/script.js"></script>
 </body>

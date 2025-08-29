@@ -23,7 +23,7 @@
         id: 'proy-01',
         titulo: 'Georiego.com',
         categoria: 'Desarrollo Web',
-        imagen: '../assets/georiego-web.png', // Reemplaza con tu imagen
+        imagen: '../assets/georiego-web.png',
         descripcion: 'Modernización completa de sitio web corporativo, implementando un diseño responsive y optimizado para la conversión de clientes.',
         url: 'https://georiego.com/',
         tags: ['Modernización', 'Personalización', 'Optimización']
@@ -32,7 +32,7 @@
         id: 'proy-02',
         titulo: 'SexShop del Perú 69',
         categoria: 'SEO Local',
-        imagen: '../assets/SEO-sexshop.png', // Reemplaza con tu imagen
+        imagen: '../assets/SEO-sexshop.png',
         descripcion: 'Posicionamiento en Google Maps para 22 sucursales a nivel nacional, aumentando la visibilidad y el tráfico local de clientes.',
         url: 'https://www.google.com/maps/search/sexshop+del+peru+69',
         tags: ['Google Maps', 'SEO Local', 'Multi-sucursal']
@@ -41,7 +41,7 @@
         id: 'proy-03',
         titulo: 'Catálogo Luckai',
         categoria: 'Catálogo Digital',
-        imagen: '../assets/Catalago-Luckai.png', // Reemplaza con tu imagen
+        imagen: '../assets/Catalago-Luckai.png',
         descripcion: 'Creación de un catálogo digital interactivo y ligero, desplegado en GitHub Pages para una solución de bajo costo y alto impacto.',
         url: 'https://dsarfirths.github.io/catalogo-luckai/',
         tags: ['GitHub Pages', 'Catálogo', 'Emprendimiento']
@@ -50,10 +50,19 @@
         id: 'proy-04',
         titulo: 'Decoraciones Maggi',
         categoria: 'Catálogo Digital',
-        imagen: 'assets/proyecto-maggi.jpg', // Reemplaza con tu imagen
+        imagen: '../assets/Decoraciones-Maggi.png',
         descripcion: 'Diseño e implementación de un catálogo online para mostrar productos de decoración de manera profesional y fácil de navegar.',
         url: 'https://dsarfirths.github.io/Decoraciones-Maggi/',
         tags: ['GitHub Pages', 'Catálogo', 'Negocio Local']
+    },
+    {
+        id: 'proy-05',
+        titulo: 'Portafolio Profesional de Ingeniero',
+        categoria: 'Catálogo Digital',
+        imagen: '../assets/Portafolio profesional.png',
+        descripcion: 'Diseño e implementación de Portafolio profesional para mostrar tus habilidades y experiencia profesional.',
+        url: 'https://dsarfirths.github.io/',
+        tags: ['GitHub Pages', 'Catálogo', 'Perfil Profesional']
     }
     // Añade tus futuros proyectos aquí
 ];
