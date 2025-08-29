@@ -78,41 +78,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonesContainer = document.getElementById('botones-accion');
 
     btnDescargar.addEventListener('click', () => {
-        // Ocultar los botones de acción para que no aparezcan en el PDF
+        // Ocultar los botones de acción en la página mientras se genera el PDF
         botonesContainer.style.display = 'none';
 
         // Generar un timestamp para el nombre del archivo
         const now = new Date();
         const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
 
-        // Apuntamos al nuevo div que envuelve el contenido del PDF
+        // Apuntamos al div que envuelve el contenido del PDF.
         const elementoParaConvertir = document.getElementById('pdf-content');
 
         const opciones = {
-            // Márgenes ajustados para dar más espacio vertical [top, left, bottom, right] en pulgadas
-            margin: [0.5, 0.5, 0.5, 0.5],
+            margin: [0.5, 0.5, 0.8, 0.5], // Aumentamos el margen inferior a 0.8 para dar espacio al número de página
             filename: `Propuesta-Servicios-Alfactor-${timestamp}.pdf`,
             image: { type: 'jpeg', quality: 0.98 }, 
             html2canvas: { 
-                scale: 2, 
+                scale: 2, // Mayor resolución
                 useCORS: true, 
-                logging: false, 
+                logging: false, // Cambiar a true para depurar si es necesario
                 onclone: (clonedDocument) => {
-                    // Copia la firma al canvas del documento clonado para el PDF
+                    const clonedContent = clonedDocument.getElementById('pdf-content');
+                    const clonedSiguientesPasos = clonedDocument.getElementById('seccion-siguientes-pasos');
+
+                    // 1. Ocultar la sección "Siguientes Pasos" que no es relevante para el PDF.
+                    if (clonedSiguientesPasos) {
+                        clonedSiguientesPasos.style.display = 'none';
+                    }
+
+                    // 2. Ajustar el contenedor padre (el <form>) para que quepa en el PDF.
+                    if (clonedContent && clonedContent.parentElement) {
+                        const parent = clonedContent.parentElement; // El <form>
+                        
+                        // Reseteamos el body del clon para eliminar márgenes fantasma.
+                        clonedDocument.body.style.margin = '0';
+                        clonedDocument.body.style.padding = '0';
+                        
+                        // Reseteamos el contenedor principal y aplicamos un ancho fijo.
+                        // ¡Esta es tu excelente idea en acción!
+                        // Forzamos un ancho que sabemos que cabe en una página A4,
+                        // lo que hará que el layout responsivo se active y se "comprima".
+                        parent.style.margin = '0';
+                        parent.style.width = '720px';
+                        parent.style.maxWidth = '720px';
+                        parent.style.boxShadow = 'none';
+                        parent.style.border = 'none';
+                    }
+
+                    // 3. Copiar la firma al canvas del documento clonado.
                     const clonedCanvas = clonedDocument.getElementById('signature-canvas');
                     if (originalCanvasForPdf && clonedCanvas) {
-                        clonedCanvas.getContext('2d').drawImage(originalCanvasForPdf, 0, 0);
+                        const ctx = clonedCanvas.getContext('2d');
+                        ctx.fillStyle = 'rgb(249, 250, 251)'; // bg-gray-50
+                        ctx.fillRect(0, 0, clonedCanvas.width, clonedCanvas.height);
+                        ctx.drawImage(originalCanvasForPdf, 0, 0);
                     }
                 }
             },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-            // Se elimina la opción 'pagebreak' para permitir que html2pdf maneje los saltos automáticamente,
-            // lo cual suele ser más efectivo para contenido de una sola página que se desborda ligeramente.
+            pagebreak: { mode: 'css', after: '.page-break-avoid' }
         };
 
-        // Generamos el PDF y restauramos los estilos cuando termina
-        html2pdf().set(opciones).from(elementoParaConvertir).save().finally(() => {
-            // Volver a mostrar los botones, independientemente de si el PDF se guardó o no.
+        // Generamos el PDF, añadimos los números de página y luego guardamos.
+        html2pdf().set(opciones).from(elementoParaConvertir).toPdf().get('pdf').then((pdf) => {
+            const totalPages = pdf.internal.getNumberOfPages();
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            pdf.setFontSize(10);
+            pdf.setTextColor(150);
+
+            for (let i = 1; i <= totalPages; i++) {
+                pdf.setPage(i);
+                // Añadir el número de página en el centro del pie de página
+                pdf.text(`Página ${i} de ${totalPages}`, pageWidth / 2, pageHeight - 0.5, {
+                    align: 'center'
+                });
+            }
+        }).save().finally(() => {
+            // Volver a mostrar los botones, sin importar si la descarga fue exitosa o cancelada
             botonesContainer.style.display = 'flex';
         });
     });

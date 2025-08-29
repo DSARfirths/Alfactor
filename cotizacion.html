@@ -70,6 +70,9 @@
         .signature-pad-clear-btn {
             @apply text-gray-500 hover:text-red-500 transition-colors p-2;
         }
+        .page-break-avoid {
+            page-break-inside: avoid;
+        }
     </style>
 
     <link rel="stylesheet" href="css/style.css">
@@ -113,7 +116,7 @@
             </section>
 
             <!-- Detalle de Servicios -->
-            <section class="contrato-seccion">
+             <section class="contrato-seccion page-break-avoid">
                 <h3>Detalle de Servicios Contratados</h3>
                 <table class="contrato-tabla">
                     <thead>
@@ -130,7 +133,7 @@
             </section>
 
             <!-- Firma del Cliente -->
-            <section class="contrato-seccion">
+            <section class="contrato-seccion page-break-avoid">
                 <h3>Firma de Aceptación</h3>
                 <div class="signature-pad-container">
                     <canvas id="signature-canvas" class="w-full h-full rounded-lg"></canvas>
@@ -144,7 +147,7 @@
             </section>
 
             <!-- Resumen de Inversión -->
-            <section class="contrato-resumen">
+            <section class="contrato-resumen page-break-avoid">
                 <table class="contrato-resumen-tabla">
                     <tbody>
                         <tr>
@@ -160,7 +163,7 @@
             </section>
 
             <!-- Siguientes Pasos -->
-            <section class="contrato-seccion">
+            <section id="seccion-siguientes-pasos" class="contrato-seccion page-break-avoid">
                 <h3>Siguientes Pasos</h3>
                 <p class="text-gray-600 text-sm mb-6">
                     Para iniciar el proyecto, completa tus datos, firma la propuesta y confirma tu aceptación. Serás redirigido a WhatsApp para contactarnos directamente.
