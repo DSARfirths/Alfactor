@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `- ${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`
     ).join('\n');
 
-    const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta desde la web. Este es un resumen:\n\n*Servicios Contratados:*\n\n\n*Inversión Total:*\nPago Único: ${formatCurrency(totalUnico)}\nPago Mensual: ${formatCurrency(totalRecurrente)}/mes\n\nMis datos de contacto ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
+    const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta desde la web. Este es un resumen:\n\n*Servicios Contratados:*\n${listaServiciosWhatsApp}\n\n*Inversión Total:*\nPago Único: ${formatCurrency(totalUnico)}\nPago Mensual: ${formatCurrency(totalRecurrente)}/mes\n\nMis datos de contacto ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
     
-    const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    const urlWhatsApp = `https://wa.me/${tuNumeroDeWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
     
     // Asignamos la URL al campo oculto '_next' que usará Formspree para redirigir.
     const nextUrlInput = document.getElementById('hidden-next-url');
@@ -78,13 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonesContainer = document.getElementById('botones-accion');
 
     btnDescargar.addEventListener('click', () => {
-        const elementoParaConvertir = document.getElementById('propuesta-form');
-
-        // Ocultamos botones y removemos estilos que afectan al PDF
-        botonesContainer.style.display = 'none';
-        elementoParaConvertir.style.margin = '0';
-        elementoParaConvertir.style.border = 'none';
-        elementoParaConvertir.style.boxShadow = 'none';
+        // Apuntamos al nuevo div que envuelve el contenido del PDF
+        const elementoParaConvertir = document.getElementById('pdf-content');
 
         const opciones = {
             margin: 0.5,
@@ -104,10 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Generamos el PDF y restauramos los estilos cuando termina
         html2pdf().set(opciones).from(elementoParaConvertir).save().then(() => {
-            botonesContainer.style.display = ''; // Revertir a display por defecto (flex)
-            elementoParaConvertir.style.margin = '';
-            elementoParaConvertir.style.border = '';
-            elementoParaConvertir.style.boxShadow = '';
+            botonesContainer.style.display = '';
         });
     });
 
