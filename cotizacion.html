@@ -262,13 +262,11 @@
 
             if (signaturePad.isEmpty()) {
                 alert("Por favor, firme en el recuadro para continuar.");
-                event.preventDefault(); // Detiene el envío del formulario
-            } else {
-                document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
                 return; // Detiene la ejecución si no hay firma
             }
-            document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
 
+            document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
+            
             const form = event.target;
             const data = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
