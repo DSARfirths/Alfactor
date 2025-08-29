@@ -78,28 +78,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonesContainer = document.getElementById('botones-accion');
 
     btnDescargar.addEventListener('click', () => {
+        // Ocultar los botones de acción para que no aparezcan en el PDF
+        botonesContainer.style.display = 'none';
+
+        // Generar un timestamp para el nombre del archivo
+        const now = new Date();
+        const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+
         // Apuntamos al nuevo div que envuelve el contenido del PDF
         const elementoParaConvertir = document.getElementById('pdf-content');
 
         const opciones = {
-            margin: 0.5,
-            filename: 'Propuesta-Servicios-Alfactor.pdf',
+            // Márgenes ajustados para dar más espacio vertical [top, left, bottom, right] en pulgadas
+            margin: [0.5, 0.5, 0.5, 0.5],
+            filename: `Propuesta-Servicios-Alfactor-${timestamp}.pdf`,
             image: { type: 'jpeg', quality: 0.98 }, 
-            html2canvas: { scale: 2, useCORS: true, logging: false, onclone: (clonedDocument) => {
-                // Copia la firma al canvas del documento clonado para el PDF
-                const clonedCanvas = clonedDocument.getElementById('signature-canvas');
-                if (originalCanvasForPdf && clonedCanvas) {
-                    clonedCanvas.getContext('2d').drawImage(originalCanvasForPdf, 0, 0);
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false, 
+                onclone: (clonedDocument) => {
+                    // Copia la firma al canvas del documento clonado para el PDF
+                    const clonedCanvas = clonedDocument.getElementById('signature-canvas');
+                    if (originalCanvasForPdf && clonedCanvas) {
+                        clonedCanvas.getContext('2d').drawImage(originalCanvasForPdf, 0, 0);
+                    }
                 }
-            }},
+            },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-            // Ayuda a evitar que el contenido se corte entre páginas
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            // Se elimina la opción 'pagebreak' para permitir que html2pdf maneje los saltos automáticamente,
+            // lo cual suele ser más efectivo para contenido de una sola página que se desborda ligeramente.
         };
 
         // Generamos el PDF y restauramos los estilos cuando termina
-        html2pdf().set(opciones).from(elementoParaConvertir).save().then(() => {
-            botonesContainer.style.display = '';
+        html2pdf().set(opciones).from(elementoParaConvertir).save().finally(() => {
+            // Volver a mostrar los botones, independientemente de si el PDF se guardó o no.
+            botonesContainer.style.display = 'flex';
         });
     });
 
@@ -108,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signaturePad = new SignaturePad(canvas, {
         backgroundColor: 'rgb(249, 250, 251)' // Coincide con bg-gray-50
     });
-
+    
     function resizeCanvas() {
         const ratio =  Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;

@@ -165,24 +165,8 @@
                 <p class="text-gray-600 text-sm mb-6">
                     Para iniciar el proyecto, completa tus datos, firma la propuesta y confirma tu aceptación. Serás redirigido a WhatsApp para contactarnos directamente.
                 </p>
-                <div id="botones-accion" class="flex flex-col sm:flex-row mt-8">
-                    <button type="submit" class="btn-aceptar-propuesta">
-                        <i class="fab fa-whatsapp mr-2"></i> Aceptar Propuesta y Contactar
-                    </button>
-                    <button id="btn-descargar-pdf" type="button" class="btn-descargar-pdf" title="Descargar una copia antes de enviar">
-                        <i class="fa-solid fa-file-arrow-down mr-2"></i> Descargar PDF
-                    </button>
-                </div>
             </section>
-            <!-- Campos ocultos para enviar datos de la propuesta -->
-            <input type="hidden" name="firma_cliente" id="hidden-signature">
-            <input type="hidden" name="servicios_seleccionados" id="hidden-servicios">
-            <input type="hidden" name="total_pago_unico" id="hidden-total-unico">
-            <input type="hidden" name="total_pago_mensual" id="hidden-total-recurrente">
-            <!-- Este campo le dice a Formspree a dónde redirigir después del envío -->
-            <input type="hidden" name="_next" id="hidden-next-url">
         </main>
-
         <footer class="text-center mt-12 pt-8 border-t border-gray-200">
             <p class="text-xs text-gray-400">
                 Esta propuesta es válida por 15 días. Los precios no incluyen IGV.
@@ -190,7 +174,23 @@
                 &copy; 2024 Alfactor Consultores. Todos los derechos reservados.
             </p>
         </footer>
-    </div>
+        </div>
+        <!-- Siguientes Pasos y Botones de Acción (Movidos fuera de #pdf-content) -->
+        <div id="botones-accion" class="flex flex-col sm:flex-row mt-8">
+            <button type="submit" class="btn-aceptar-propuesta">
+                <i class="fab fa-whatsapp mr-2"></i> Aceptar Propuesta y Contactar
+            </button>
+            <button id="btn-descargar-pdf" type="button" class="btn-descargar-pdf" title="Descargar una copia antes de enviar">
+                <i class="fa-solid fa-file-arrow-down mr-2"></i> Descargar PDF
+            </button>
+        </div>
+        <!-- Campos ocultos para enviar datos de la propuesta -->
+        <input type="hidden" name="firma_cliente" id="hidden-signature">
+        <input type="hidden" name="servicios_seleccionados" id="hidden-servicios">
+        <input type="hidden" name="total_pago_unico" id="hidden-total-unico">
+        <input type="hidden" name="total_pago_mensual" id="hidden-total-recurrente">
+        <!-- Este campo le dice a Formspree a dónde redirigir después del envío -->
+        <input type="hidden" name="_next" id="hidden-next-url">
     </form>
 
     <script src="js/database.js"></script>
