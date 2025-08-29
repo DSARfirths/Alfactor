@@ -1,71 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecciona tus Módulos - Alfactor</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.css">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="bg-gray-50 text-gray-800">
 
     <main class="container mx-auto px-6 py-12">
-        <a href="index.html" class="inline-flex items-center text-blue-600 font-semibold hover:underline mb-8 no-underline">
+        <a href="index.html"
+            class="inline-flex items-center text-blue-600 font-semibold hover:underline mb-8 no-underline">
             <i class="fa-solid fa-arrow-left mr-2"></i>
             Volver a elegir perfil
         </a>
 
         <div id="opciones-container" class="text-left">
             <h3 id="titulo-selector" class="text-3xl font-bold text-center mb-10">Cargando...</h3>
-            
+
             <div id="modulos-catalogo" class="hidden">
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
             <div id="modulos-retail" class="hidden">
-                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
         </div>
     </main>
 
-    <div id="carrito-flotante" class="fixed bottom-6 right-6 transition-all duration-500 opacity-0 -translate-y-10 pointer-events-none">
-        <button id="carrito-contraido" class="bg-blue-600 text-white w-64 h-16 rounded-full shadow-2xl flex items-center justify-between px-6 hover:bg-blue-700 transition-all">
+    <div id="carrito-flotante"
+        class="fixed bottom-6 right-6 transition-all duration-500 opacity-0 -translate-y-10 pointer-events-none">
+        <button id="carrito-contraido"
+            class="bg-blue-600 text-white w-64 h-16 rounded-full shadow-2xl flex items-center justify-between px-6 hover:bg-blue-700 transition-all">
             <div>
                 <i class="fa-solid fa-cart-shopping mr-2"></i>
                 <span id="carrito-items-count">0 items</span>
             </div>
             <span id="carrito-total-preview" class="font-bold text-lg">S/ 0.00</span>
         </button>
-        
-        <div id="carrito-expandido" class="absolute bottom-0 right-0 w-96 bg-white rounded-2xl shadow-2xl p-6 hidden transition-all duration-300">
+
+        <div id="carrito-expandido"
+            class="absolute bottom-0 right-0 w-96 bg-white rounded-2xl shadow-2xl p-6 hidden transition-all duration-300">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-xl font-bold">Resumen de Inversión</h3>
-                <button id="cerrar-carrito" class="text-gray-400 hover:text-gray-800"><i class="fa-solid fa-xmark fa-lg"></i></button>
+                <button id="cerrar-carrito" class="text-gray-400 hover:text-gray-800"><i
+                        class="fa-solid fa-xmark fa-lg"></i></button>
             </div>
             <div id="resumen-lista" class="max-h-64 overflow-y-auto pr-2">
                 <p class="text-gray-500">Aún no has añadido módulos.</p>
             </div>
             <div class="mt-6 pt-4 border-t-2 border-gray-100">
-                <p class="flex justify-between font-semibold"><span>Pagos Únicos:</span> <span id="total-unico">S/ 0.00</span></p>
-                <p class="flex justify-between font-semibold mt-2"><span>Pagos Mensuales:</span> <span id="total-recurrente">S/ 0.00</span></p>
+                <p class="flex justify-between font-semibold"><span>Pagos Únicos:</span> <span id="total-unico">S/
+                        0.00</span></p>
+                <p class="flex justify-between font-semibold mt-2"><span>Pagos Mensuales:</span> <span
+                        id="total-recurrente">S/ 0.00</span></p>
             </div>
-            <a href="#" id="btn-contrato" class="block w-full text-center bg-blue-600 text-white font-bold py-3 rounded-lg mt-6 hover:bg-blue-700 transition-all no-underline">
+            <a href="#" id="btn-contrato"
+                class="block w-full text-center bg-blue-600 text-white font-bold py-3 rounded-lg mt-6 hover:bg-blue-700 transition-all no-underline">
                 Generar Cotización
             </a>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
     <script src="js/database.js"></script>
     <script src="js/selector.js"></script>
 </body>
+
 </html>
