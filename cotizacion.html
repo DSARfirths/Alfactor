@@ -200,27 +200,36 @@
             const botonesContainer = document.getElementById('botones-accion');
 
             btnDescargar.addEventListener('click', () => {
-                // Ocultamos los botones para que no aparezcan en el PDF
-                botonesContainer.style.display = 'none';
-
                 const elementoParaConvertir = document.getElementById('propuesta-form');
+
+                // Ocultamos botones y removemos estilos que afectan al PDF
+                botonesContainer.style.display = 'none';
+                elementoParaConvertir.style.margin = '0';
+                elementoParaConvertir.style.border = 'none';
+                elementoParaConvertir.style.boxShadow = 'none';
+
                 const opciones = {
-                    margin: [0.5, 0.5, 0.5, 0.5],
+                    margin: 0.5,
                     filename: 'Propuesta-Servicios-Alfactor.pdf',
                     image: { type: 'jpeg', quality: 0.98 }, 
                     html2canvas: { scale: 2, useCORS: true, logging: false, onclone: (clonedDocument) => {
-                        // Lógica corregida para copiar la firma al canvas del PDF
+                        // Copia la firma al canvas del documento clonado para el PDF
                         const clonedCanvas = clonedDocument.getElementById('signature-canvas');
                         if (originalCanvasForPdf && clonedCanvas) {
                             clonedCanvas.getContext('2d').drawImage(originalCanvasForPdf, 0, 0);
                         }
                     }},
-                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+                    // Ayuda a evitar que el contenido se corte entre páginas
+                    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
                 };
 
-                // Generamos el PDF y volvemos a mostrar los botones cuando termina
+                // Generamos el PDF y restauramos los estilos cuanto termina
                 html2pdf().set(opciones).from(elementoParaConvertir).save().then(() => {
-                    botonesContainer.style.display = 'flex';
+                    botonesContainer.style.display = ''; // Revertir a display por defecto (flex)
+                    elementoParaConvertir.style.margin = '';
+                    elementoParaConvertir.style.border = '';
+                    elementoParaConvertir.style.boxShadow = '';
                 });
             });
         });
@@ -248,13 +257,58 @@
         });
 
         // Integración con el envío del formulario
-        document.getElementById('propuesta-form').addEventListener('submit', (event) => {
+        document.getElementById('propuesta-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío tradicional del formulario
+
             if (signaturePad.isEmpty()) {
                 alert("Por favor, firme en el recuadro para continuar.");
                 event.preventDefault(); // Detiene el envío del formulario
             } else {
                 document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
+                return; // Detiene la ejecución si no hay firma
             }
+            document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
+
+            const form = event.target;
+            const data = new FormData(form);
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+
+            // Deshabilitar botón y mostrar estado de "enviando"
+            submitButton.disabled = true;
+            submitButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando...`;
+
+            // Enviar datos con AJAX a Formspree
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // Éxito en el envío
+                    submitButton.innerHTML = `<i class="fa-solid fa-check mr-2"></i> ¡Enviado! Redirigiendo...`;
+                    alert('¡Propuesta enviada con éxito! Serás redirigido a WhatsApp para finalizar el contacto.');
+                    
+                    // Redirigir a la URL de WhatsApp generada en cotizacion.js
+                    const whatsAppUrl = document.getElementById('hidden-next-url').value;
+                    window.location.href = whatsAppUrl;
+                } else {
+                    // Error del servidor de Formspree
+                    response.json().then(data => {
+                        const errorMessage = data.errors ? data.errors.map(e => e.message).join(', ') : 'Hubo un problema al enviar la propuesta.';
+                        alert(errorMessage);
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = originalButtonText;
+                    });
+                }
+            }).catch(error => {
+                // Error de red
+                alert('Hubo un error de red. Por favor, revisa tu conexión e inténtalo de nuevo.');
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
         });
     </script>
 </body>
