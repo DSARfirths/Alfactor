@@ -120,8 +120,9 @@
 .contrato-resumen {
     @apply mt-8 flex justify-end;
 }
+*/
 .contrato-resumen-tabla {
-    @apply w-full max-w-sm;
+    @apply w-full; /* Elimina max-w-sm para que sea 100% responsive */
 }
 .btn-aceptar-propuesta {
     @apply w-full mt-8 py-4 px-6 bg-green-600 text-white font-bold text-lg rounded-lg shadow-lg transition-all duration-300 ease-in-out;
@@ -131,3 +132,29 @@
 #proyectos-grid {
     transition: opacity 0.4s ease-in-out;
 }
+
+/* Estilos para el modal de proyectos mejorado */
+.basicLightbox {
+    /* Fondo más oscuro y semitransparente */
+    @apply bg-black bg-opacity-80;
+}
+
+.project-modal {
+    /* Limita la altura para que no ocupe toda la pantalla en dispositivos altos */
+    max-height: 90vh;
+}
+
+.modal-close-btn {
+    @apply absolute top-3 right-3 z-20 w-10 h-10 bg-black bg-opacity-40 text-white rounded-full flex items-center justify-center transition-all duration-300;
+    @apply hover:bg-red-600 hover:scale-110;
+}
+
+.modal-content-scroll {
+    @apply overflow-y-auto; /* ¡La clave para el scroll en móviles! */
+}
+
+/* Estilos para la barra de scroll en el modal (WebKit browsers) */
+.modal-content-scroll::-webkit-scrollbar { @apply w-2; }
+.modal-content-scroll::-webkit-scrollbar-track { @apply bg-gray-100; }
+.modal-content-scroll::-webkit-scrollbar-thumb { @apply bg-gray-400 rounded-full; }
+.modal-content-scroll::-webkit-scrollbar-thumb:hover { @apply bg-gray-500; }

@@ -63,26 +63,45 @@ document.addEventListener('DOMContentLoaded', () => {
             const proyecto = proyectosDB.find(p => p.id === proyectoId);
             if (proyecto) {
                 const tagsHTML = proyecto.tags.map(tag => `<span class="bg-gray-200 text-gray-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${tag}</span>`).join('');
-
+                // Botón de cierre en la esquina superior derecha
+                const closeButton = `<button class="absolute top-2 right-2 bg-gray-700 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-500 transition-colors duration-200" onclick="basicLightbox.close()"><i class="fa-solid fa-times"></i></button>`;
                 const modalContent = `
-                    <div class="bg-white rounded-lg overflow-hidden max-w-4xl w-full p-4 sm:p-0">
-                        <img src="${proyecto.imagen}" alt="${proyecto.titulo}" class="w-full h-64 object-cover">
-                        <div class="p-6 sm:p-8">
-                            <span class="text-sm font-semibold text-blue-600">${proyecto.categoria}</span>
-                            <h2 class="text-3xl font-bold my-2">${proyecto.titulo}</h2>
-                            <div class="my-4">
-                                ${tagsHTML}
+                    <div class="project-modal bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row relative">
+                        <button class="modal-close-btn" onclick="basicLightbox.close()">
+                            <i class="fa-solid fa-times fa-lg"></i>
+                        </button>
+                        <div class="md:w-1/2">
+                            <img src="${proyecto.imagen}" alt="${proyecto.titulo}" class="w-full h-64 md:h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-6 sm:p-8 flex flex-col modal-content-scroll">
+                            <div class="flex-grow">
+                                <span class="text-sm font-semibold text-blue-600 uppercase tracking-wider">${proyecto.categoria}</span>
+                                <h2 class="text-3xl lg:text-4xl font-bold my-2 text-gray-800">${proyecto.titulo}</h2>
+                                <div class="my-4 flex flex-wrap gap-2">
+                                    ${tagsHTML}
+                                </div>
+                                <p class="text-gray-600 leading-relaxed">${proyecto.descripcion}</p>
                             </div>
-                            <p class="text-gray-700 mb-6">${proyecto.descripcion}</p>
-                            <a href="${proyecto.url}" target="_blank" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 no-underline">
-                                Visitar Sitio Web <i class="fa-solid fa-external-link-alt ml-2"></i>
-                            </a>
+                            <div class="mt-8 flex-shrink-0">
+                                <a href="${proyecto.url}" target="_blank" class="inline-flex items-center justify-center bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 no-underline w-full sm:w-auto">
+                                    Visitar Sitio Web
+                                    <i class="fa-solid fa-external-link-alt ml-2"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 `;
 
+
                 const lightbox = basicLightbox.create(modalContent, {
-                    className: 'flex items-center justify-center' // Clases para centrar el modal
+                    className: 'flex items-center justify-center p-4', // Clases para centrar el modal y añadir padding
+                    onShow: (instance) => {
+                        // Evita el scroll del body cuando el modal está abierto
+                        document.body.style.overflow = 'hidden';
+                    },
+                    onClose: (instance) => {
+                        document.body.style.overflow = 'auto';
+                    }
                 });
                 lightbox.show();
             }
