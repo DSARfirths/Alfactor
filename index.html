@@ -22,70 +22,41 @@
 
     <header class="text-center py-12 bg-white shadow-sm">
         <div class="container mx-auto px-6">
-            <h1 class="text-5xl font-bold text-blue-600">Alfactor</h1>
+            <img src="assets/AlFactor consultores.png" alt="Alfactor Consultores Logo" class="mx-auto h-24 sm:h-32 mb-2">
             <p class="text-xl text-gray-600 mt-2">Ingeniería y Desarrollo para Potenciar tu Negocio</p>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-16">
-        <section id="cotizador" class="text-center">
-            <h2 class="text-3xl font-bold mb-4">Descubre la Solución Perfecta para Ti</h2>
-            <p class="text-lg text-gray-500 max-w-2xl mx-auto">1. Selecciona tu tipo de negocio para ver las mejoras que podemos implementar.</p>
+        <section id="bienvenida" class="text-center">
+            <h2 class="text-3xl font-bold mb-4">Empecemos por el principio</h2>
+            <p class="text-lg text-gray-500 max-w-2xl mx-auto">Para darte la mejor solución, cuéntanos, ¿qué tipo de negocio tienes?</p>
 
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
-                <div class="perfil-card bg-white p-8 rounded-xl shadow-lg border-2 border-transparent cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" data-perfil="catalogo">
-                    <h3 class="text-2xl font-bold text-blue-600">🛒 Negocio de Catálogo</h3>
-                    <p class="mt-2 text-gray-600">Ideal para servicios, consultores, B2B, o productos de alto valor.</p>
-                </div>
-                <div class="perfil-card bg-white p-8 rounded-xl shadow-lg border-2 border-transparent cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" data-perfil="retail">
-                    <h3 class="text-2xl font-bold text-blue-600">🏪 Negocio Retail</h3>
-                    <p class="mt-2 text-gray-600">Para tiendas con múltiples productos, venta directa y gestión de stock.</p>
-                </div>
+                <a href="selector.html?perfil=catalogo" class="perfil-card-link">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-2 border-transparent transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-blue-500">
+                        <h3 class="text-2xl font-bold text-blue-600">🛒 Negocio de Catálogo</h3>
+                        <p class="mt-2 text-gray-600">Servicios, consultores, B2B, productos de alto valor.</p>
+                    </div>
+                </a>
+                <a href="selector.html?perfil=retail" class="perfil-card-link">
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-2 border-transparent transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-blue-500">
+                        <h3 class="text-2xl font-bold text-blue-600">🏪 Negocio Retail</h3>
+                        <p class="mt-2 text-gray-600">Tiendas, venta directa y gestión de stock.</p>
+                    </div>
+                </a>
             </div>
+        </section>
 
-            <div id="opciones-container" class="mt-16 text-left hidden">
-                <h3 class="text-2xl font-bold text-center mb-8">2. Añade los módulos que necesites</h3>
-                
-                <div id="modulos-catalogo" class="hidden">
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-                </div>
-
-                <div id="modulos-retail" class="hidden">
-                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-                </div>
+        <section id="proyectos" class="mt-24 text-center">
+            <h2 class="text-3xl font-bold mb-12">Proyectos Realizados</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-4 rounded-xl shadow-lg"><p class="text-gray-400">Sitio web de Georiego</p></div>
+                <div class="bg-white p-4 rounded-xl shadow-lg"><p class="text-gray-400">Proyecto 2 Próximamente</p></div>
+                <div class="bg-white p-4 rounded-xl shadow-lg"><p class="text-gray-400">Proyecto 3 Próximamente</p></div>
             </div>
         </section>
     </main>
-
-    <div id="carrito-flotante" class="fixed bottom-6 right-6 transition-all duration-500 opacity-0 -translate-y-10 pointer-events-none">
-    <button id="carrito-contraido" class="bg-blue-600 text-white w-64 h-16 rounded-full shadow-2xl flex items-center justify-between px-6 hover:bg-blue-700 transition-all">
-        <div>
-            <i class="fa-solid fa-cart-shopping mr-2"></i>
-            <span id="carrito-items-count">0 items</span>
-        </div>
-        <span id="carrito-total-preview" class="font-bold text-lg">S/ 0.00</span>
-    </button>
-
-    <div id="carrito-expandido" class="absolute bottom-0 right-0 w-96 bg-white rounded-2xl shadow-2xl p-6 hidden transition-all duration-300">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold">Resumen de Inversión</h3>
-            <button id="cerrar-carrito" class="text-gray-400 hover:text-gray-800"><i class="fa-solid fa-xmark fa-lg"></i></button>
-        </div>
-        <div id="resumen-lista" class="max-h-64 overflow-y-auto pr-2">
-            <p class="text-gray-500">Aún no has añadido módulos.</p>
-        </div>
-        <div class="mt-6 pt-4 border-t-2 border-gray-100">
-            <p class="flex justify-between font-semibold"><span>Pagos Únicos:</span> <span id="total-unico">S/ 0.00</span></p>
-            <p class="flex justify-between font-semibold mt-2"><span>Pagos Mensuales:</span> <span id="total-recurrente">S/ 0.00</span></p>
-        </div>
-        <a href="contrato.html" id="btn-contrato" class="block w-full text-center bg-green-500 text-white font-bold py-3 rounded-lg mt-6 hover:bg-green-600 transition-all">
-            Generar Contrato
-        </a>
-    </div>
-</div>
-    <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
-    
-    <script src="js/database.js"></script>
     
     <script src="js/script.js"></script>
 </body>

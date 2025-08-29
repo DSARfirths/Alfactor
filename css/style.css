@@ -1,4 +1,3 @@
-/* Usamos la directiva @layer de Tailwind para inyectar nuestras clases personalizadas */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,38 +6,29 @@
     body {
         font-family: 'Poppins', sans-serif;
     }
+    .no-underline {
+        text-decoration: none;
+    }
 }
 
-/* Estilos personalizados para complementar Tailwind */
 .perfil-card.selected {
     @apply border-blue-600 shadow-blue-200 ring-4 ring-blue-100;
-}
-
-/* Estilos para las tarjetas de módulo */
-.modulo-card {
-    @apply bg-white rounded-lg shadow-md cursor-pointer transition-all duration-300 ease-in-out border-2 border-transparent overflow-hidden relative;
-}
-
-.modulo-card:hover {
-    @apply shadow-2xl -translate-y-2;
-}
-
-.modulo-card .precio {
-    @apply block mt-4 text-lg font-bold text-blue-600;
 }
 
 .modulo-card.selected {
     @apply border-blue-600 ring-4 ring-blue-100;
 }
 
-/* -- NUEVO -- Estilos para el botón de Zoom sobre la imagen */
+.modulo-card .precio {
+    @apply block text-lg font-bold text-blue-600;
+}
+
 .zoom-btn {
     @apply absolute top-3 right-3 w-10 h-10 bg-black bg-opacity-50 text-white rounded-full flex items-center justify-center opacity-0 transition-all duration-300 ease-in-out cursor-pointer;
-    /* Evita que el click en el botón active el label */
     pointer-events: auto;
 }
 
-.modulo-card:hover .zoom-btn {
+.modulo-card:hover .zoom-btn, .modulo-card-wrapper:hover .zoom-btn {
     @apply opacity-100;
 }
 
@@ -46,14 +36,13 @@
     @apply bg-opacity-75 scale-110;
 }
 
-/* Pequeño ajuste para la barra de scroll en el resumen */
 #resumen-lista::-webkit-scrollbar {
     width: 6px;
 }
 #resumen-lista::-webkit-scrollbar-thumb {
     @apply bg-gray-300 rounded-full;
 }
-/* -- NUEVO -- Estilos para el botón "Lo Quiero" */
+
 .add-to-cart-btn {
     @apply w-full mt-4 py-2 px-4 bg-blue-600 text-white font-bold rounded-lg shadow-md transition-all duration-300 ease-in-out;
     @apply hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-0.5;

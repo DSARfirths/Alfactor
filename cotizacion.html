@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propuesta de Servicios - Alfactor</title>
+    <title>Resumen de Cotización - Alfactor</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Estilo simple para imprimir */
         @media print {
             .no-print { display: none; }
             body { -webkit-print-color-adjust: exact; }
@@ -20,8 +26,8 @@
     <div id="propuesta" class="container mx-auto max-w-4xl my-12 p-10 bg-white shadow-2xl rounded-lg">
         <header class="flex justify-between items-center pb-6 border-b-2 border-gray-200">
             <div>
-                <h1 class="text-4xl font-bold text-blue-600">Alfactor</h1>
-                <p class="text-gray-600">Propuesta de Servicios Digitales</p>
+                <img src="assets/AlFactor consultores.png" alt="Alfactor Consultores Logo" class="h-16 sm:h-20 mb-2">
+                <p class="text-gray-600">Resumen de Cotización</p>
             </div>
             <div class="text-right">
                 <p><strong>Fecha:</strong> <span id="fecha-actual"></span></p>
@@ -30,7 +36,7 @@
         </header>
 
         <main class="mt-8">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Detalle de Servicios Contratados</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Detalle de Servicios</h2>
             
             <div id="detalle-servicios" class="space-y-4">
                 </div>
@@ -44,25 +50,25 @@
             </div>
 
             <div class="mt-12 text-sm text-gray-500">
-                <h4 class="font-bold mb-2">Términos y Condiciones</h4>
-                <p>1. La presente propuesta tiene una validez de 15 días.</p>
+                <h4 class="font-bold mb-2">Siguientes Pasos</h4>
+                <p>1. Para formalizar esta cotización y comenzar a trabajar, por favor contáctanos a través del botón de WhatsApp.</p>
                 <p>2. El pago inicial corresponde al 50% de los "Pagos Únicos". El 50% restante se abonará a la entrega del proyecto.</p>
                 <p>3. Los pagos recurrentes se facturarán de forma mensual, con un ciclo de pago del 1 al 5 de cada mes.</p>
             </div>
         </main>
     </div>
 
-    <div class="container mx-auto max-w-4xl text-center mb-12 no-print">
-        <button onclick="window.print()" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-600 transition-all">
-            Imprimir o Guardar como PDF
-        </button>
-        <a href="index.html" class="ml-4 bg-gray-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-gray-600 transition-all">
-            Volver al Cotizador
+    <div class="container mx-auto max-w-4xl text-center mb-12 no-print space-y-4 sm:space-y-0 sm:space-x-4">
+        <a id="btn-whatsapp" href="#" target="_blank" class="bg-green-500 text-white font-bold py-4 px-8 rounded-lg hover:bg-green-600 transition-all text-lg inline-flex items-center no-underline">
+            <i class="fa-brands fa-whatsapp mr-3 fa-lg"></i>
+            Contactar para Contratar
         </a>
+        <button onclick="window.print()" class="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-600 transition-all">
+            Imprimir o Guardar PDF
+        </button>
     </div>
 
     <script src="js/database.js"></script>
-    <script src="js/contrato.js"></script>
-
+    <script src="js/cotizacion.js"></script>
 </body>
 </html>
