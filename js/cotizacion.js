@@ -77,69 +77,71 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDescargar = document.getElementById('btn-descargar-pdf');
     const botonesContainer = document.getElementById('botones-accion');
 
-    btnDescargar.addEventListener('click', () => {
-        // Ocultar los botones de acción en la página mientras se genera el PDF
+    btnDescargar.addEventListener('click', async () => {
+        // UI updates for loading state
         botonesContainer.style.display = 'none';
+        btnDescargar.disabled = true;
+        btnDescargar.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Generando PDF...';
 
-        // Generar un timestamp para el nombre del archivo
-        const now = new Date();
-        const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+        try {
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
+            const filename = `Propuesta-Servicios-Alfactor-${timestamp}.pdf`;
 
-        // Apuntamos al div que envuelve el contenido del PDF.
-        const elementoParaConvertir = document.getElementById('pdf-content');
+            const elementoParaConvertir = document.getElementById('pdf-content');
+            
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'in',
+                format: 'a4'
+            });
 
-        const opciones = {
-            margin: [0.5, 0.5, 0.8, 0.5], // Aumentamos el margen inferior a 0.8 para dar espacio al número de página
-            filename: `Propuesta-Servicios-Alfactor-${timestamp}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 }, 
-            html2canvas: { 
-                scale: 2, // Mayor resolución
-                useCORS: true, 
-                logging: false, // Cambiar a true para depurar si es necesario
-                onclone: (clonedDocument) => {
-                    const clonedContent = clonedDocument.getElementById('pdf-content');
-                    const clonedSiguientesPasos = clonedDocument.getElementById('seccion-siguientes-pasos');
+            await pdf.html(elementoParaConvertir, {
+                margin: [0.5, 0.5, 0.8, 0.5],
+                autoPaging: 'text',
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    onclone: (clonedDocument) => {
+                        const clonedContent = clonedDocument.getElementById('pdf-content');
+                        const clonedSiguientesPasos = clonedDocument.getElementById('seccion-siguientes-pasos');
 
-                    // 1. Ocultar la sección "Siguientes Pasos" que no es relevante para el PDF.
-                    if (clonedSiguientesPasos) {
-                        clonedSiguientesPasos.style.display = 'none';
+                        if (clonedSiguientesPasos) {
+                            clonedSiguientesPasos.style.display = 'none';
+                        }
+
+                        if (clonedContent && clonedContent.parentElement) {
+                            const parent = clonedContent.parentElement;
+                            clonedDocument.body.style.margin = '0';
+                            clonedDocument.body.style.padding = '0';
+                            parent.style.margin = '0';
+                            parent.style.width = '720px';
+                            parent.style.maxWidth = '720px';
+                            parent.style.boxShadow = 'none';
+                            parent.style.border = 'none';
+                        }
+
+                        const clonedCanvas = clonedDocument.getElementById('signature-canvas');
+                        if (originalCanvasForPdf && clonedCanvas) {
+                            if(clonedCanvas.width === 0 || clonedCanvas.height === 0) {
+                                clonedCanvas.width = originalCanvasForPdf.width;
+                                clonedCanvas.height = originalCanvasForPdf.height;
+                            }
+                            const ctx = clonedCanvas.getContext('2d');
+                            ctx.fillStyle = 'rgb(249, 250, 251)';
+                            ctx.fillRect(0, 0, clonedCanvas.width, clonedCanvas.height);
+                            ctx.drawImage(originalCanvasForPdf, 0, 0);
+                        }
                     }
+                },
+                x: 0,
+                y: 0,
+                width: 8.27,
+                windowWidth: 720
+            });
 
-                    // 2. Ajustar el contenedor padre (el <form>) para que quepa en el PDF.
-                    if (clonedContent && clonedContent.parentElement) {
-                        const parent = clonedContent.parentElement; // El <form>
-                        
-                        // Reseteamos el body del clon para eliminar márgenes fantasma.
-                        clonedDocument.body.style.margin = '0';
-                        clonedDocument.body.style.padding = '0';
-                        
-                        // Reseteamos el contenedor principal y aplicamos un ancho fijo.
-                        // ¡Esta es tu excelente idea en acción!
-                        // Forzamos un ancho que sabemos que cabe en una página A4,
-                        // lo que hará que el layout responsivo se active y se "comprima".
-                        parent.style.margin = '0';
-                        parent.style.width = '720px';
-                        parent.style.maxWidth = '720px';
-                        parent.style.boxShadow = 'none';
-                        parent.style.border = 'none';
-                    }
-
-                    // 3. Copiar la firma al canvas del documento clonado.
-                    const clonedCanvas = clonedDocument.getElementById('signature-canvas');
-                    if (originalCanvasForPdf && clonedCanvas) {
-                        const ctx = clonedCanvas.getContext('2d');
-                        ctx.fillStyle = 'rgb(249, 250, 251)'; // bg-gray-50
-                        ctx.fillRect(0, 0, clonedCanvas.width, clonedCanvas.height);
-                        ctx.drawImage(originalCanvasForPdf, 0, 0);
-                    }
-                }
-            },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: 'css', after: '.page-break-avoid' }
-        };
-
-        // Generamos el PDF, añadimos los números de página y luego guardamos.
-        html2pdf().set(opciones).from(elementoParaConvertir).toPdf().get('pdf').then((pdf) => {
             const totalPages = pdf.internal.getNumberOfPages();
             const pageWidth = pdf.internal.pageSize.getWidth();
             const pageHeight = pdf.internal.pageSize.getHeight();
@@ -149,15 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (let i = 1; i <= totalPages; i++) {
                 pdf.setPage(i);
-                // Añadir el número de página en el centro del pie de página
                 pdf.text(`Página ${i} de ${totalPages}`, pageWidth / 2, pageHeight - 0.5, {
                     align: 'center'
                 });
             }
-        }).save().finally(() => {
-            // Volver a mostrar los botones, sin importar si la descarga fue exitosa o cancelada
+            
+            await pdf.save(filename);
+
+        } catch (error) {
+            console.error("Error al generar el PDF:", error);
+            alert("Hubo un error al generar el PDF. Por favor, inténtalo de nuevo.");
+        } finally {
             botonesContainer.style.display = 'flex';
-        });
+            btnDescargar.disabled = false;
+            btnDescargar.innerHTML = '<i class="fa-solid fa-file-arrow-down mr-2"></i> Descargar PDF';
+        }
     });
 
     // Lógica del Signature Pad
