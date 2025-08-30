@@ -18,10 +18,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVXM5RdhC+pKaz/ACATUSYwTTXyqw=="
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-        integrity="sha512-qZvrmS2ekKPF2mSznvQsPFUPMNH2ifQN0sqXpFJxw4xSjSWpdVghpXfgjFd+eILvMmrSYeVR8GRjYqa0Cj1OQg=="
+        integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style type="text/tailwindcss">
@@ -64,6 +64,10 @@
         .campo-editable {
             @apply w-full bg-gray-50 border border-gray-200 rounded-md px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all duration-300 mt-1 placeholder-gray-400;
         }
+        /* Style for invalid fields */
+        .campo-editable:invalid {
+            @apply border-red-500 ring-red-500;
+        }
         .signature-pad-container {
             @apply relative w-full h-48 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg mt-4 cursor-crosshair;
         }
@@ -82,10 +86,8 @@
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <!-- El contenedor ahora es el formulario -->
     <form id="propuesta-form" action="https://formspree.io/f/xpwjpapn" method="POST" class="contrato-container">
         <div id="pdf-content">
-        <!-- Header del Contrato -->
         <header class="contrato-header">
             <div>
                 <img src="assets/AlFactor consultores.png" alt="Alfactor Consultores Logo" class="h-20">
@@ -98,7 +100,6 @@
         </header>
 
         <main>
-            <!-- Sección de Partes -->
             <section class="mt-10">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div>
@@ -110,16 +111,15 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-600">CLIENTE</h3>
-                        <input type="text" name="cliente_nombre" placeholder="Nombre del Cliente / Empresa" class="campo-editable" required>
-                        <input type="text" name="cliente_documento" placeholder="RUC/DNI del Cliente" class="campo-editable">
-                        <input type="text" name="cliente_direccion" placeholder="Dirección del Cliente" class="campo-editable">
-                        <input type="email" name="_replyto" placeholder="Correo del Cliente (para responder)" class="campo-editable" required>
+                        <input type="text" name="cliente_nombre" id="cliente_nombre" placeholder="Nombre del Cliente / Empresa" class="campo-editable" required maxlength="60">
+                        <input type="text" name="cliente_documento" id="cliente_documento" placeholder="RUC/DNI del Cliente" class="campo-editable" required minlength="7" maxlength="12" pattern="[0-9]+">
+                        <input type="text" name="cliente_direccion" id="cliente_direccion" placeholder="Dirección del Cliente" class="campo-editable" required maxlength="100">
+                        <input type="email" name="_replyto" id="cliente_email" placeholder="Correo del Cliente (para responder)" class="campo-editable" required>
                     </div>
                 </div>
             </section>
 
-            <!-- Detalle de Servicios -->
-             <section class="contrato-seccion page-break-avoid">
+            <section class="contrato-seccion page-break-avoid">
                 <h3>Detalle de Servicios Contratados</h3>
                 <table class="contrato-tabla">
                     <thead>
@@ -130,12 +130,10 @@
                         </tr>
                     </thead>
                     <tbody id="detalle-servicios-body">
-                        <!-- Los servicios se insertarán aquí dinámicamente -->
-                    </tbody>
+                        </tbody>
                 </table>
             </section>
 
-            <!-- Firma del Cliente -->
             <section class="contrato-seccion page-break-avoid">
                 <h3>Firma de Aceptación</h3>
                 <div class="signature-pad-container">
@@ -149,7 +147,6 @@
                 <p class="text-xs text-gray-500 mt-2">Por favor, firme en el recuadro de arriba para confirmar la aceptación de los términos.</p>
             </section>
 
-            <!-- Resumen de Inversión -->
             <section class="contrato-resumen page-break-avoid">
                 <table class="contrato-resumen-tabla">
                     <tbody>
@@ -165,7 +162,6 @@
                 </table>
             </section>
 
-            <!-- Siguientes Pasos -->
             <section id="seccion-siguientes-pasos" class="contrato-seccion page-break-avoid">
                 <h3>Siguientes Pasos</h3>
                 <p class="text-gray-600 text-sm mb-6">
@@ -177,25 +173,22 @@
             <p class="text-xs text-gray-400">
                 Esta propuesta es válida por 15 días. Los precios no incluyen IGV.
                 <br>
-                &copy; 2024 Alfactor Consultores. Todos los derechos reservados.
+                © 2024 Alfactor Consultores. Todos los derechos reservados.
             </p>
         </footer>
         </div>
-        <!-- Siguientes Pasos y Botones de Acción (Movidos fuera de #pdf-content) -->
         <div id="botones-accion" class="flex flex-col sm:flex-row mt-8">
             <button type="submit" class="btn-aceptar-propuesta">
                 <i class="fab fa-whatsapp mr-2"></i> Aceptar Propuesta y Contactar
             </button>
-            <button id="btn-descargar-pdf" type="button" class="btn-descargar-pdf" title="Descargar una copia antes de enviar">
+            <button id="btn-descargar-pdf" type="button" class="btn-descargar-pdf hidden sm:inline-flex items-center justify-center" title="Descargar una copia antes de enviar">
                 <i class="fa-solid fa-file-arrow-down mr-2"></i> Descargar PDF
             </button>
         </div>
-        <!-- Campos ocultos para enviar datos de la propuesta -->
         <input type="hidden" name="firma_cliente" id="hidden-signature">
         <input type="hidden" name="servicios_seleccionados" id="hidden-servicios">
         <input type="hidden" name="total_pago_unico" id="hidden-total-unico">
         <input type="hidden" name="total_pago_mensual" id="hidden-total-recurrente">
-        <!-- Este campo le dice a Formspree a dónde redirigir después del envío -->
         <input type="hidden" name="_next" id="hidden-next-url">
     </form>
 

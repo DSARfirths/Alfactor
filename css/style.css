@@ -120,7 +120,6 @@
 .contrato-resumen {
     @apply mt-8 flex justify-end;
 }
-*/
 .contrato-resumen-tabla {
     @apply w-full; /* Elimina max-w-sm para que sea 100% responsive */
 }

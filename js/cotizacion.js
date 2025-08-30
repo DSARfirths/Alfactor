@@ -1,14 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
     const formatCurrency = (value) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(value);
 
+    // --- ELEMENTOS DEL DOM ---
+    const detalleContainer = document.getElementById('detalle-servicios-body');
+    const form = document.getElementById('propuesta-form');
+    const btnAceptar = form.querySelector('button[type="submit"]');
+    const btnDescargar = document.getElementById('btn-descargar-pdf');
+    const botonesContainer = document.getElementById('botones-accion');
+    const canvas = document.getElementById('signature-canvas');
+    const signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(249, 250, 251)' // Coincide con bg-gray-50
+    });
+
+    // --- INICIALIZACIÓN DE DATOS ---
     const params = new URLSearchParams(window.location.search);
     const serviciosIds = params.get('servicios')?.split(',') || [];
-    const detalleContainer = document.getElementById('detalle-servicios-body');
 
     if (serviciosIds.length === 0) {
         // Deshabilitar botones si no hay servicios
-        document.querySelector('.btn-aceptar-propuesta').disabled = true;
-        document.querySelector('.btn-descargar-pdf').disabled = true;
+        btnAceptar.disabled = true;
+        btnDescargar.disabled = true;
         detalleContainer.innerHTML = '<tr><td colspan="3" class="text-red-500 text-center py-4">No se han seleccionado servicios. Por favor, vuelve al cotizador.</td></tr>';
         return;
     }
@@ -44,41 +55,44 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('total-recurrente-contrato').textContent = `${formatCurrency(totalRecurrente)}/mes`;
     document.getElementById('fecha-actual').textContent = new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // --- LÓGICA DEL FORMULARIO Y REDIRECCIÓN A WHATSAPP ---
+    // --- LÓGICA DE WHATSAPP Y FORMULARIO ---
     const tuNumeroDeWhatsApp = '51924281623';
 
-    // 1. Poblar campos ocultos del formulario para Formspree
-    const serviciosParaForm = serviciosSeleccionados.map(s =>
-        `${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`
-    ).join('; ');
-
+    // Poblar campos ocultos
+    const serviciosParaForm = serviciosSeleccionados.map(s => `${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`).join('; ');
     document.getElementById('hidden-servicios').value = serviciosParaForm;
     document.getElementById('hidden-total-unico').value = formatCurrency(totalUnico);
     document.getElementById('hidden-total-recurrente').value = `${formatCurrency(totalRecurrente)}/mes`;
-
-    // 2. Construir dinámicamente la URL de redirección a WhatsApp para Formspree
-    const listaServiciosWhatsApp = serviciosSeleccionados.map(s => 
-        `- ${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`
-    ).join('\n');
-
+    
+    // Construir URL de redirección a WhatsApp
+    const listaServiciosWhatsApp = serviciosSeleccionados.map(s => `- ${s.nombre} (${formatCurrency(s.precio)}${s.tipo === 'recurrente' ? '/mes' : ''})`).join('\n');
     const mensajeWhatsApp = `¡Hola Alfactor! 👋\n\nAcabo de aceptar la propuesta desde la web. Este es un resumen:\n\n*Servicios Contratados:*\n${listaServiciosWhatsApp}\n\n*Inversión Total:*\nPago Único: ${formatCurrency(totalUnico)}\nPago Mensual: ${formatCurrency(totalRecurrente)}/mes\n\nMis datos de contacto ya fueron enviados. Quedo a la espera de los siguientes pasos. ¡Gracias!`;
-    
     const urlWhatsApp = `https://wa.me/${tuNumeroDeWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-    
-    // Asignamos la URL al campo oculto '_next' que usará Formspree para redirigir.
-    const nextUrlInput = document.getElementById('hidden-next-url');
-    if (nextUrlInput) {
-        nextUrlInput.value = urlWhatsApp;
-    } else {
-        console.error('El campo oculto con id "hidden-next-url" no se encontró en el HTML. La redirección a WhatsApp no funcionará.');
+    document.getElementById('hidden-next-url').value = urlWhatsApp;
+
+    // --- FUNCIÓN DE VALIDACIÓN ---
+    function validarDatosCliente() {
+        const nombre = document.getElementById('cliente_nombre');
+        const documento = document.getElementById('cliente_documento');
+        const direccion = document.getElementById('cliente_direccion');
+        const email = document.getElementById('cliente_email');
+        
+        // La validación HTML5 se encarga de la mayoría, pero comprobamos aquí para la descarga de PDF
+        if (!nombre.checkValidity() || !documento.checkValidity() || !direccion.checkValidity() || !email.checkValidity()) {
+            alert('Por favor, completa todos los datos del cliente con el formato correcto antes de continuar.');
+            // Opcional: enfocar el primer campo inválido
+            form.querySelector(':invalid')?.focus();
+            return false;
+        }
+        return true;
     }
 
-    const originalCanvasForPdf = document.getElementById('signature-canvas');
-    const btnDescargar = document.getElementById('btn-descargar-pdf');
-    const botonesContainer = document.getElementById('botones-accion');
-
+    // --- LÓGICA DE DESCARGA PDF ---
     btnDescargar.addEventListener('click', async () => {
-        // UI updates for loading state
+        if (!validarDatosCliente()) {
+            return; // Detiene si los datos del cliente no son válidos
+        }
+
         botonesContainer.style.display = 'none';
         btnDescargar.disabled = true;
         btnDescargar.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Generando PDF...';
@@ -87,76 +101,41 @@ document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}`;
             const filename = `Propuesta-Servicios-Alfactor-${timestamp}.pdf`;
-
             const elementoParaConvertir = document.getElementById('pdf-content');
             
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'in',
+                orientation: 'p',
+                unit: 'pt',
                 format: 'a4'
             });
 
             await pdf.html(elementoParaConvertir, {
-                margin: [0.5, 0.5, 0.8, 0.5],
-                autoPaging: 'text',
+                callback: function (doc) {
+                    doc.save(filename);
+                },
+                margin: [40, 30, 40, 30],
+                autoPaging: 'slice', // SOLUCIÓN: Cambiado de 'text' a 'slice'
                 html2canvas: {
-                    scale: 2,
+                    scale: 0.75, // Ajusta la escala para mejor rendimiento y tamaño de archivo
                     useCORS: true,
-                    logging: false,
                     onclone: (clonedDocument) => {
-                        const clonedContent = clonedDocument.getElementById('pdf-content');
-                        const clonedSiguientesPasos = clonedDocument.getElementById('seccion-siguientes-pasos');
-
-                        if (clonedSiguientesPasos) {
-                            clonedSiguientesPasos.style.display = 'none';
-                        }
-
-                        if (clonedContent && clonedContent.parentElement) {
-                            const parent = clonedContent.parentElement;
-                            clonedDocument.body.style.margin = '0';
-                            clonedDocument.body.style.padding = '0';
-                            parent.style.margin = '0';
-                            parent.style.width = '720px';
-                            parent.style.maxWidth = '720px';
-                            parent.style.boxShadow = 'none';
-                            parent.style.border = 'none';
-                        }
-
+                        // Ocultar elementos no deseados en el PDF
+                        clonedDocument.getElementById('seccion-siguientes-pasos').style.display = 'none';
+                        
+                        // Asegurar que la firma se renderice correctamente en el PDF
+                        const originalCanvas = document.getElementById('signature-canvas');
                         const clonedCanvas = clonedDocument.getElementById('signature-canvas');
-                        if (originalCanvasForPdf && clonedCanvas) {
-                            if(clonedCanvas.width === 0 || clonedCanvas.height === 0) {
-                                clonedCanvas.width = originalCanvasForPdf.width;
-                                clonedCanvas.height = originalCanvasForPdf.height;
-                            }
-                            const ctx = clonedCanvas.getContext('2d');
-                            ctx.fillStyle = 'rgb(249, 250, 251)';
-                            ctx.fillRect(0, 0, clonedCanvas.width, clonedCanvas.height);
-                            ctx.drawImage(originalCanvasForPdf, 0, 0);
+                        if (originalCanvas && clonedCanvas) {
+                            clonedCanvas.getContext('2d').drawImage(originalCanvas, 0, 0);
                         }
                     }
                 },
                 x: 0,
                 y: 0,
-                width: 8.27,
-                windowWidth: 720
+                width: 595, // Ancho de A4 en puntos
+                windowWidth: 1024 // Un ancho de ventana razonable para el renderizado
             });
-
-            const totalPages = pdf.internal.getNumberOfPages();
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-
-            pdf.setFontSize(10);
-            pdf.setTextColor(150);
-
-            for (let i = 1; i <= totalPages; i++) {
-                pdf.setPage(i);
-                pdf.text(`Página ${i} de ${totalPages}`, pageWidth / 2, pageHeight - 0.5, {
-                    align: 'center'
-                });
-            }
-            
-            await pdf.save(filename);
 
         } catch (error) {
             console.error("Error al generar el PDF:", error);
@@ -168,77 +147,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Lógica del Signature Pad
-    const canvas = document.getElementById('signature-canvas');
-    const signaturePad = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(249, 250, 251)' // Coincide con bg-gray-50
-    });
-    
+    // --- LÓGICA DEL SIGNATURE PAD ---
     function resizeCanvas() {
-        const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
-        signaturePad.clear(); // Limpia el canvas al redimensionar
+        signaturePad.clear();
     }
-
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
+    document.getElementById('clear-signature-btn').addEventListener('click', () => signaturePad.clear());
 
-    document.getElementById('clear-signature-btn').addEventListener('click', () => {
-        signaturePad.clear();
-    });
+    // --- ENVÍO DEL FORMULARIO ---
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    // Integración con el envío del formulario
-    document.getElementById('propuesta-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir el envío tradicional del formulario
-
+        // Validar campos de cliente y firma
+        if (!validarDatosCliente()) {
+            return;
+        }
         if (signaturePad.isEmpty()) {
             alert("Por favor, firme en el recuadro para continuar.");
-            return; // Detiene la ejecución si no hay firma
+            return;
         }
 
         document.getElementById('hidden-signature').value = signaturePad.toDataURL('image/png');
         
-        const form = event.target;
         const data = new FormData(form);
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalButtonText = submitButton.innerHTML;
+        const originalButtonText = btnAceptar.innerHTML;
 
-        // Deshabilitar botón y mostrar estado de "enviando"
-        submitButton.disabled = true;
-        submitButton.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando...`;
+        btnAceptar.disabled = true;
+        btnAceptar.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando...`;
 
-        // Enviar datos con AJAX a Formspree
         fetch(form.action, {
             method: form.method,
             body: data,
-            headers: {
-                'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
         }).then(response => {
             if (response.ok) {
-                // Éxito en el envío
-                submitButton.innerHTML = `<i class="fa-solid fa-check mr-2"></i> ¡Enviado! Redirigiendo...`;
+                btnAceptar.innerHTML = `<i class="fa-solid fa-check mr-2"></i> ¡Enviado! Redirigiendo...`;
                 alert('¡Propuesta enviada con éxito! Serás redirigido a WhatsApp para finalizar el contacto.');
-                
-                // Redirigir a la URL de WhatsApp generada en cotizacion.js
-                const whatsAppUrl = document.getElementById('hidden-next-url').value;
-                window.location.href = whatsAppUrl;
+                window.location.href = urlWhatsApp;
             } else {
-                // Error del servidor de Formspree
                 response.json().then(data => {
                     const errorMessage = data.errors ? data.errors.map(e => e.message).join(', ') : 'Hubo un problema al enviar la propuesta.';
                     alert(errorMessage);
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
+                    btnAceptar.disabled = false;
+                    btnAceptar.innerHTML = originalButtonText;
                 });
             }
         }).catch(error => {
-            // Error de red
             alert('Hubo un error de red. Por favor, revisa tu conexión e inténtalo de nuevo.');
-            submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonText;
+            btnAceptar.disabled = false;
+            btnAceptar.innerHTML = originalButtonText;
         });
     });
 });
