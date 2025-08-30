@@ -64,7 +64,6 @@
         .campo-editable {
             @apply w-full bg-gray-50 border border-gray-200 rounded-md px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all duration-300 mt-1 placeholder-gray-400;
         }
-        /* Style for invalid fields */
         .campo-editable:invalid {
             @apply border-red-500 ring-red-500;
         }
@@ -77,114 +76,207 @@
         .signature-pad-clear-btn {
             @apply text-gray-500 hover:text-red-500 transition-colors p-2;
         }
+        
         .page-break-avoid {
             page-break-inside: avoid;
         }
+
+        /* --- ✅ ESTILOS PARA LA GENERACIÓN DEL PDF --- */
+
+        /* Ajusta el contenedor principal para el renderizado */
+        .pdf-render-mode {
+            max-width: 720px !important; 
+            margin: 0 auto !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+        .pdf-render-mode .grid-cols-1.sm\:grid-cols-2 {
+            grid-template-columns: 1fr !important;
+        }
+        
+        /* Oculta los botones de acción en el PDF */
+        .pdf-render-mode #botones-accion {
+            display: none !important;
+        }
+
+        /* ✅ [NUEVO] Oculta la sección "Siguientes Pasos" en el PDF */
+        .pdf-render-mode #seccion-siguientes-pasos {
+            display: none !important;
+        }
+
+        /* ✅ [NUEVO] Expande los Términos y Condiciones eliminando el scroll */
+        .pdf-render-mode .prose {
+            max-height: none !important;
+            overflow: visible !important;
+        }
+
+        /* Fuerza un salto de página antes del elemento */
+        .pdf-render-mode .pdf-salto-pagina {
+            page-break-before: always;
+        }
     </style>
+
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <form id="propuesta-form" action="https://formspree.io/f/xpwjpapn" method="POST" class="contrato-container">
+
+    <form id="propuesta-form" action="https://formspree.io/f/xpwjpapn" method="POST"
+        class="contrato-container max-w-full">
         <div id="pdf-content">
-        <header class="contrato-header">
-            <div>
-                <img src="assets/AlFactor consultores.png" alt="Alfactor Consultores Logo" class="h-20">
-                <p class="text-sm text-gray-500 mt-2">Ingeniería y Desarrollo para Potenciar tu Negocio</p>
-            </div>
-            <div class="text-right">
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Propuesta de Servicios</h2>
-                <p class="text-gray-500 mt-1">Fecha: <span id="fecha-actual"></span></p>
-            </div>
-        </header>
-
-        <main>
-            <section class="mt-10">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-gray-600">PRESTADOR DEL SERVICIO</h3>
-                        <p class="font-bold">Alfactor Consultores</p>
-                        <p class="text-sm text-gray-500">RUC: 10713145381</p>
-                        <p class="text-sm text-gray-500">ASENT. H. LUIS PAREDES MACEDA MZ A 11 LT 01</p>
-                        <p class="text-sm text-gray-500">alfactorconsultores@gmail.com</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-gray-600">CLIENTE</h3>
-                        <input type="text" name="cliente_nombre" id="cliente_nombre" placeholder="Nombre del Cliente / Empresa" class="campo-editable" required maxlength="60">
-                        <input type="text" name="cliente_documento" id="cliente_documento" placeholder="RUC/DNI del Cliente" class="campo-editable" required minlength="7" maxlength="12" pattern="[0-9]+">
-                        <input type="text" name="cliente_direccion" id="cliente_direccion" placeholder="Dirección del Cliente" class="campo-editable" required maxlength="100">
-                        <input type="email" name="_replyto" id="cliente_email" placeholder="Correo del Cliente (para responder)" class="campo-editable" required>
-                    </div>
+            <header class="contrato-header page-break-avoid">
+                <div>
+                    <img src="assets/AlFactor consultores.png" alt="Alfactor Consultores Logo" class="h-20">
+                    <p class="text-sm text-gray-500 mt-2">Ingeniería y Desarrollo para Potenciar tu Negocio</p>
                 </div>
-            </section>
+                <div class="text-right">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Propuesta de Servicios</h2>
+                    <p class="text-gray-500 mt-1">Fecha: <span id="fecha-actual"></span></p>
+                </div>
+            </header>
 
-            <section class="contrato-seccion page-break-avoid">
-                <h3>Detalle de Servicios Contratados</h3>
-                <table class="contrato-tabla">
-                    <thead>
-                        <tr>
-                            <th>Servicio</th>
-                            <th class="text-center">Tipo de Pago</th>
-                            <th class="text-right">Inversión</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detalle-servicios-body">
+            <main>
+                <section class="mt-10 page-break-avoid">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-semibold text-gray-600">PRESTADOR DEL SERVICIO</h3>
+                            <p class="font-bold">Alfactor Consultores</p>
+                            <p class="text-sm text-gray-500">RUC: 10713145381</p>
+                            <p class="text-sm text-gray-500">ASENT. H. LUIS PAREDES MACEDA MZ A 11 LT 01</p>
+                            <p class="text-sm text-gray-500">alfactorconsultores@gmail.com</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-600">CLIENTE</h3>
+                            <input type="text" name="cliente_nombre" id="cliente_nombre"
+                                placeholder="Nombre del Cliente / Empresa" class="campo-editable" required
+                                maxlength="60">
+                            <input type="text" name="cliente_documento" id="cliente_documento"
+                                placeholder="RUC/DNI del Cliente" class="campo-editable" required minlength="7"
+                                maxlength="12" pattern="[0-9]+">
+                            <input type="text" name="cliente_direccion" id="cliente_direccion"
+                                placeholder="Dirección del Cliente" class="campo-editable" required maxlength="100">
+                            <input type="email" name="_replyto" id="cliente_email"
+                                placeholder="Correo del Cliente (para responder)" class="campo-editable" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="contrato-seccion page-break-avoid">
+                    <h3>Detalle de Servicios Contratados</h3>
+                    <div class="overflow-x-auto">
+                        <table class="contrato-tabla w-full">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th class="text-center">Tipo de Pago</th>
+                                    <th class="text-right">Inversión</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalle-servicios-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="contrato-seccion page-break-avoid pdf-salto-pagina">
+                    <h3>Términos y Condiciones</h3>
+                    <div
+                        class="prose prose-sm max-w-none p-4 border rounded-md bg-gray-50 max-h-60 overflow-y-auto text-gray-600">
+                        <p>Al firmar y aceptar esta propuesta, el <strong>CLIENTE</strong> reconoce y acepta los
+                            siguientes términos y condiciones establecidos por <strong>Alfactor Consultores</strong> (en
+                            adelante, el <strong>PRESTADOR</strong>).</p>
+                        <ol>
+                            <li><strong>Aceptación:</strong> La firma digital en este documento y/o el pago del adelanto
+                                constituyen la aceptación formal de la propuesta y de todos los términos aquí descritos,
+                                dando inicio a la relación contractual.</li>
+                            <li><strong>Alcance de los Servicios:</strong> El <strong>PRESTADOR</strong> se compromete a
+                                ejecutar únicamente los servicios detallados explícitamente en la sección "Detalle de
+                                Servicios Contratados". Cualquier trabajo no especificado será considerado como
+                                adicional y requerirá una nueva cotización.</li>
+                            <li><strong>Pagos e Inversión:</strong> Se requiere un pago inicial del 50% de los "Pagos
+                                Únicos" para iniciar el proyecto, el cual no es reembolsable. El 50% restante se abonará
+                                contra entrega del proyecto finalizado. Los pagos recurrentes se facturarán mensualmente
+                                por adelantado. Todos los precios no incluyen IGV.</li>
+                            <li><strong>Obligaciones del Cliente:</strong> El <strong>CLIENTE</strong> se compromete a
+                                proveer de manera oportuna todo el material necesario (logos, textos, imágenes, accesos,
+                                etc.). Los retrasos por parte del <strong>CLIENTE</strong> impactarán en los plazos de
+                                entrega.</li>
+                            <li><strong>Plazos de Entrega:</strong> Los plazos son estimados y dependen de la fluidez en
+                                la comunicación y la entrega oportuna de material y feedback por parte del
+                                <strong>CLIENTE</strong>.</li>
+                            <li><strong>Propiedad Intelectual:</strong> Una vez liquidado el 100% del proyecto, la
+                                propiedad intelectual del producto final será del <strong>CLIENTE</strong>. El
+                                <strong>PRESTADOR</strong> se reserva el derecho de incluir el proyecto en su
+                                portafolio.</li>
+                            <li><strong>Confidencialidad:</strong> Ambas partes se comprometen a mantener la
+                                confidencialidad sobre la información sensible del negocio de la contraparte.</li>
+                            <li><strong>Cancelación:</strong> Si el <strong>CLIENTE</strong> cancela el proyecto una vez
+                                iniciado, el pago inicial no será reembolsado.</li>
+                            <li><strong>Jurisdicción:</strong> Para cualquier controversia, las partes se someten a la
+                                competencia de los jueces y tribunales del distrito judicial de Piura, Perú.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="contrato-seccion page-break-avoid">
+                    <h3>Firma de Aceptación</h3>
+                    <div class="signature-pad-container">
+                        <canvas id="signature-canvas" class="w-full h-full rounded-lg"></canvas>
+                        <div class="signature-pad-actions">
+                            <button type="button" id="clear-signature-btn" class="signature-pad-clear-btn"
+                                title="Limpiar firma">
+                                <i class="fa-solid fa-eraser fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Mi firma en este recuadro confirma que he leído y acepto la
+                        propuesta y los términos y condiciones.</p>
+                </section>
+
+                <section class="contrato-resumen page-break-avoid">
+                    <table class="contrato-resumen-tabla">
+                        <tbody>
+                            <tr>
+                                <td class="text-gray-600">Subtotal Pagos Únicos:</td>
+                                <td id="total-unico-contrato" class="text-right font-semibold"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-gray-600">Subtotal Pagos Mensuales:</td>
+                                <td id="total-recurrente-contrato" class="text-right font-semibold"></td>
+                            </tr>
                         </tbody>
-                </table>
-            </section>
+                    </table>
+                </section>
 
-            <section class="contrato-seccion page-break-avoid">
-                <h3>Firma de Aceptación</h3>
-                <div class="signature-pad-container">
-                    <canvas id="signature-canvas" class="w-full h-full rounded-lg"></canvas>
-                    <div class="signature-pad-actions">
-                        <button type="button" id="clear-signature-btn" class="signature-pad-clear-btn" title="Limpiar firma">
-                            <i class="fa-solid fa-eraser fa-lg"></i>
-                        </button>
-                    </div>
-                </div>
-                <p class="text-xs text-gray-500 mt-2">Por favor, firme en el recuadro de arriba para confirmar la aceptación de los términos.</p>
-            </section>
-
-            <section class="contrato-resumen page-break-avoid">
-                <table class="contrato-resumen-tabla">
-                    <tbody>
-                        <tr>
-                            <td class="text-gray-600">Subtotal Pagos Únicos:</td>
-                            <td id="total-unico-contrato" class="text-right font-semibold"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-gray-600">Subtotal Pagos Mensuales:</td>
-                            <td id="total-recurrente-contrato" class="text-right font-semibold"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section id="seccion-siguientes-pasos" class="contrato-seccion page-break-avoid">
-                <h3>Siguientes Pasos</h3>
-                <p class="text-gray-600 text-sm mb-6">
-                    Para iniciar el proyecto, completa tus datos, firma la propuesta y confirma tu aceptación. Serás redirigido a WhatsApp para contactarnos directamente.
+                <section id="seccion-siguientes-pasos" class="contrato-seccion page-break-avoid">
+                    <h3>Siguientes Pasos</h3>
+                    <p class="text-gray-600 text-sm mb-6">
+                        Para iniciar el proyecto, completa tus datos, lee los términos, firma la propuesta y confirma tu
+                        aceptación. Serás redirigido a WhatsApp para contactarnos directamente.
+                    </p>
+                </section>
+            </main>
+            <footer class="text-center mt-12 pt-8 border-t border-gray-200 page-break-avoid">
+                <p class="text-xs text-gray-400">
+                    Esta propuesta es válida por 15 días.
+                    <br>
+                    © 2024 Alfactor Consultores. Todos los derechos reservados.
                 </p>
-            </section>
-        </main>
-        <footer class="text-center mt-12 pt-8 border-t border-gray-200">
-            <p class="text-xs text-gray-400">
-                Esta propuesta es válida por 15 días. Los precios no incluyen IGV.
-                <br>
-                © 2024 Alfactor Consultores. Todos los derechos reservados.
-            </p>
-        </footer>
+            </footer>
         </div>
+
         <div id="botones-accion" class="flex flex-col sm:flex-row mt-8">
             <button type="submit" class="btn-aceptar-propuesta">
                 <i class="fab fa-whatsapp mr-2"></i> Aceptar Propuesta y Contactar
             </button>
-            <button id="btn-descargar-pdf" type="button" class="btn-descargar-pdf hidden sm:inline-flex items-center justify-center" title="Descargar una copia antes de enviar">
+            <button id="btn-descargar-pdf" type="button"
+                class="btn-descargar-pdf hidden sm:inline-flex items-center justify-center"
+                title="Descargar una copia antes de enviar">
                 <i class="fa-solid fa-file-arrow-down mr-2"></i> Descargar PDF
             </button>
         </div>
+
         <input type="hidden" name="firma_cliente" id="hidden-signature">
         <input type="hidden" name="servicios_seleccionados" id="hidden-servicios">
         <input type="hidden" name="total_pago_unico" id="hidden-total-unico">
