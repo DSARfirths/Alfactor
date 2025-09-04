@@ -22,7 +22,7 @@
     {
         id: 'proy-01',
         titulo: 'Georiego.com',
-        categoria: 'Desarrollo Web',
+        categoria: 'Landing Page & Ecomerce',
         imagen: 'assets/georiego-web.png',
         descripcion: 'Modernización completa de sitio web corporativo, implementando un diseño responsive y optimizado para la conversión de clientes.',
         url: 'https://georiego.com/',
@@ -58,11 +58,20 @@
     {
         id: 'proy-05',
         titulo: 'Portafolio Profesional de Ingeniero',
-        categoria: 'Catálogo Digital',
+        categoria: 'Portafolio Digital',
         imagen: 'assets/Portafolio profesional.png',
         descripcion: 'Diseño e implementación de Portafolio profesional para mostrar tus habilidades y experiencia profesional.',
         url: 'https://dsarfirths.github.io/',
-        tags: ['GitHub Pages', 'Catálogo', 'Perfil Profesional']
+        tags: ['GitHub Pages', 'Portafolio', 'Perfil Profesional']
+    },
+    {
+        id: 'proy-06',
+        titulo: 'Pauli Kaffe',
+        categoria: 'Landing Page & Carta Digital',
+        imagen: 'assets/Pauli-web.png',
+        descripcion: 'Diseño e implementación de Landing Page y Carta Digital para café, optimizando la experiencia del cliente y facilitando el acceso al menú.',
+        url: 'https://dsarfirths.github.io/Pauli',
+        tags: ['Modernización', 'Personalización', 'Catálogo', 'Negocio Local', 'Emprendimiento']
     }
     // Añade tus futuros proyectos aquí
 ];
