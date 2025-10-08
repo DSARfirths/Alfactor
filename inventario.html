@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +19,12 @@
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-
 <body class="bg-slate-50 text-slate-900">
+
     <header class="relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-600 opacity-90"></div>
         <div class="relative max-w-7xl mx-auto px-6 py-24 text-white">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-10">
+            <div class="flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
                 <div class="max-w-3xl">
                     <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white transition">
                         <i class="fa-solid fa-arrow-left"></i>
@@ -39,32 +38,32 @@
                         Controla tu stock en tiempo real, evita quiebres y elimina diferencias entre lo f&#237;sico y el sistema con captura en origen y conteo c&#237;clico asistido.
                     </p>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="#precios" class="inline-flex items-center gap-2 bg-white text-slate-900 px-5 py-3 rounded-xl font-semibold shadow hover:shadow-lg transition">
+                        <a href="#precios" class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-slate-900 shadow hover:shadow-lg transition">
                             Ver planes
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                        <a href="#contacto" class="inline-flex items-center gap-2 bg-transparent ring-2 ring-white/70 px-5 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+                        <a href="#contacto" class="inline-flex items-center gap-2 rounded-xl px-5 py-3 font-semibold ring-2 ring-white/70 hover:bg-white/10 transition">
                             Solicitar demo
                         </a>
                     </div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-3xl p-8 md:p-10 border border-white/20 max-w-md">
+                <div class="max-w-md rounded-3xl border border-white/20 bg-white/10 p-8 backdrop-blur">
                     <h2 class="text-xl font-semibold mb-6">Lo que desbloqueas</h2>
                     <ul class="space-y-4 text-sm md:text-base">
                         <li class="flex items-center gap-3">
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/10">
+                            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
                                 <i data-lucide="boxes" class="w-5 h-5"></i>
                             </span>
                             Kardex autom&#225;tico con FIFO o Promedio
                         </li>
                         <li class="flex items-center gap-3">
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/10">
+                            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
                                 <i data-lucide="scan" class="w-5 h-5"></i>
                             </span>
                             Captura en origen con c&#243;digo de barras y RFID opcional
                         </li>
                         <li class="flex items-center gap-3">
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/10">
+                            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
                                 <i data-lucide="brain" class="w-5 h-5"></i>
                             </span>
                             IA que previene quiebres y detecta anomal&#237;as
@@ -74,10 +73,9 @@
             </div>
         </div>
     </header>
-
     <main>
         <section class="max-w-7xl mx-auto px-6 py-10">
-            <div class="grid md:grid-cols-3 gap-4 text-sm text-slate-600">
+            <div class="grid gap-4 text-sm text-slate-600 md:grid-cols-3">
                 <div class="flex items-center gap-2">
                     <i data-lucide="layers" class="w-4 h-4 text-blue-600"></i>
                     Kardex autom&#225;tico (FIFO, Promedio)
@@ -95,157 +93,241 @@
 
         <section id="beneficios" class="max-w-7xl mx-auto px-6 py-12">
             <h2 class="text-3xl md:text-4xl font-bold">Beneficios clave</h2>
-            <p class="mt-3 text-slate-600 max-w-2xl">
+            <p class="mt-3 max-w-2xl text-slate-600">
                 Del caos a la claridad: captura en origen, reglas simples y anal&#237;tica con IA para que nunca m&#225;s vendas algo que no tienes ni dejes de vender lo que s&#237; est&#225;.
             </p>
-            <div class="mt-8 grid md:grid-cols-3 gap-6">
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+            <div class="mt-8 grid gap-6 md:grid-cols-3">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="boxes" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">Inventario sin desfases</h3>
+                    <h3 class="mt-4 text-lg font-semibold">Inventario sin desfases</h3>
                     <p class="mt-2 text-slate-600">Control en tiempo real de entradas, salidas y traslados. Kardex autom&#225;tico con FIFO o Promedio.</p>
                 </article>
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="scan" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">Captura confiable</h3>
+                    <h3 class="mt-4 text-lg font-semibold">Captura confiable</h3>
                     <p class="mt-2 text-slate-600">Escaneo con c&#243;digo de barras desde c&#225;mara o lector. Opcional RFID para lectura masiva.</p>
                 </article>
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="brain" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">IA que previene quiebres</h3>
+                    <h3 class="mt-4 text-lg font-semibold">IA que previene quiebres</h3>
                     <p class="mt-2 text-slate-600">Predice agotamientos, detecta anomal&#237;as y sugiere reabastecimientos &#243;ptimos.</p>
                 </article>
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="plug-zap" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">Se integra a tu operaci&#243;n</h3>
+                    <h3 class="mt-4 text-lg font-semibold">Se integra a tu operaci&#243;n</h3>
                     <p class="mt-2 text-slate-600">Conecta compras, ventas, facturaci&#243;n y contabilidad. API abierta para tus sistemas.</p>
                 </article>
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="shield-check" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">Trazabilidad y auditor&#237;a</h3>
+                    <h3 class="mt-4 text-lg font-semibold">Trazabilidad y auditor&#237;a</h3>
                     <p class="mt-2 text-slate-600">Historial de movimientos, usuarios y documentos. Conteo c&#237;clico asistido.</p>
                 </article>
-                <article class="bg-white rounded-2xl shadow-sm p-6 border border-slate-100">
-                    <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
                         <i data-lucide="line-chart" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="mt-4 font-semibold text-lg">Tableros accionables</h3>
-                    <p class="mt-2 text-slate-600">Stock por almac&#233;n/SKU, rotaci&#243;n, exactitud, alertas de bajo stock y diferenciales f&#237;sico&#8211;sistema.</p>
+                    <h3 class="mt-4 text-lg font-semibold">Tableros accionables</h3>
+                    <p class="mt-2 text-slate-600">Stock por almac&#233;n/SKU, rotaci&#243;n, exactitud, alertas de bajo stock y diferenciales f&#237;sico-sistema.</p>
                 </article>
             </div>
         </section>
 
-        <section class="bg-white border-y border-slate-100">
+        <section class="border-y border-slate-100 bg-white">
             <div class="max-w-7xl mx-auto px-6 py-12">
                 <h2 class="text-3xl md:text-4xl font-bold">C&#243;mo funciona</h2>
-                <div class="mt-6 grid md:grid-cols-4 gap-6 text-slate-700">
-                    <article class="rounded-2xl p-6 border border-slate-100">
-                        <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">1</div>
+                <div class="mt-6 grid gap-6 text-slate-700 md:grid-cols-4">
+                    <article class="rounded-2xl border border-slate-100 p-6">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 font-bold text-white">1</div>
                         <p class="mt-3 font-medium">Registra tu cat&#225;logo y stocks iniciales</p>
                     </article>
-                    <article class="rounded-2xl p-6 border bg-white text-slate-900 border-transparent shadow-xl">
-                        <div class="flex items-baseline justify-between">
+                    <article class="rounded-2xl border border-slate-100 p-6">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 font-bold text-white">2</div>
+                        <p class="mt-3 font-medium">Escanea entradas, salidas y traslados</p>
+                    </article>
+                    <article class="rounded-2xl border border-slate-100 p-6">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 font-bold text-white">3</div>
+                        <p class="mt-3 font-medium">La IA alerta quiebres y anomal&#237;as</p>
+                    </article>
+                    <article class="rounded-2xl border border-slate-100 p-6">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 font-bold text-white">4</div>
+                        <p class="mt-3 font-medium">Reportes y conciliaciones en un clic</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section id="integraciones" class="max-w-7xl mx-auto px-6 py-12">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div class="max-w-3xl">
+                    <h2 class="text-3xl md:text-4xl font-bold">Integraciones y conexiones</h2>
+                    <p class="mt-2 text-slate-600">Conecta tu tienda, facturaci&#243;n y contabilidad. Mant&#233;n tu flujo actual y gana visibilidad en tiempo real.</p>
+                </div>
+                <a href="mailto:alfactorconsultores@gmail.com" class="inline-flex items-center gap-2 font-semibold text-blue-700 hover:text-blue-800 transition">
+                    Solicitar un conector
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+                <div class="rounded-xl border border-slate-200 bg-white p-4 text-center font-semibold">Shopify</div>
+                <div class="rounded-xl border border-slate-200 bg-white p-4 text-center font-semibold">WooCommerce</div>
+                <div class="rounded-xl border border-slate-200 bg-white p-4 text-center font-semibold">Facturaci&#243;n electr&#243;nica</div>
+                <div class="rounded-xl border border-slate-200 bg-white p-4 text-center font-semibold">Contabilidad</div>
+            </div>
+        </section>
+
+        <section id="precios" class="bg-slate-900">
+            <div class="max-w-7xl mx-auto px-6 py-16 text-white">
+                <div class="max-w-3xl">
+                    <h2 class="text-3xl md:text-4xl font-bold">Planes simples, listos para vender hoy</h2>
+                    <p class="mt-2 text-slate-300">Elige el plan que calza con tu operaci&#243;n. Puedes empezar sin integraciones y activarlas m&#225;s adelante.</p>
+                </div>
+                <div class="mt-10 grid gap-6 md:grid-cols-3">
+                    <article class="flex h-full flex-col rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-lg shadow-slate-950/20">
+                        <div class="flex items-baseline justify-between gap-2">
+                            <h3 class="text-xl font-bold text-white">Starter</h3>
+                            <span class="text-lg font-semibold text-blue-300">US$39/mes</span>
+                        </div>
+                        <p class="mt-2 text-slate-300">Para una tienda o almac&#233;n que quiere orden desde el d&#237;a 1.</p>
+                        <ul class="mt-5 flex-1 space-y-2 text-sm md:text-base">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">1 almac&#233;n, hasta 1,000 SKUs</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">2 usuarios, roles b&#225;sicos</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">Kardex autom&#225;tico (FIFO/Promedio)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">Captura con c&#243;digo de barras (c&#225;mara/USB)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">Alertas de bajo stock</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">IA b&#225;sica (predicci&#243;n simple de quiebres)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
+                                <span class="text-slate-100">Soporte por chat</span>
+                            </li>
+                        </ul>
+                        <a href="#contacto" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-semibold text-slate-900 hover:bg-slate-200 transition">
+                            Solicitar demo
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </article>
+                    <article class="relative flex h-full flex-col rounded-2xl border border-transparent bg-white p-6 text-slate-900 shadow-2xl shadow-blue-900/20 md:-translate-y-4">
+                        <span class="absolute -top-4 left-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700 shadow">
+                            M&#225;s popular
+                        </span>
+                        <div class="mt-2 flex items-baseline justify-between gap-2">
                             <h3 class="text-xl font-bold text-slate-900">Growth</h3>
                             <span class="text-lg font-semibold text-blue-700">US$89/mes</span>
                         </div>
                         <p class="mt-2 text-slate-600">Escala a m&#250;ltiples almacenes con procesos m&#225;s estrictos.</p>
-                        <ul class="mt-5 space-y-2">
+                        <ul class="mt-5 flex-1 space-y-2 text-sm md:text-base">
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">Hasta 3 almacenes, 5,000 SKUs</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">5 usuarios con permisos avanzados</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">Multi-ubicaci&#243;n y traslados internos</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">Conteo c&#237;clico asistido (ABC)</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">Integraciones est&#225;ndar (API + conectores)</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">IA de demanda y anomal&#237;as</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-700 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-700"></i>
                                 <span class="text-slate-800">Soporte prioritario</span>
                             </li>
                         </ul>
-                        <a href="#contacto" class="mt-6 inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold bg-slate-900 text-white hover:bg-slate-800 transition">
+                        <a href="#contacto" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white hover:bg-slate-800 transition">
                             Probar ahora
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </article>
-                    <article class="rounded-2xl p-6 border bg-slate-800/50 border-slate-700">
-                        <div class="flex items-baseline justify-between">
+                    <article class="flex h-full flex-col rounded-2xl border border-slate-800 bg-slate-900/60 p-6 shadow-lg shadow-blue-900/10">
+                        <div class="flex items-baseline justify-between gap-2">
                             <h3 class="text-xl font-bold text-white">Pro</h3>
                             <span class="text-lg font-semibold text-blue-300">US$149/mes</span>
                         </div>
                         <p class="mt-2 text-slate-300">Operaciones exigentes con visibilidad total y automatizaci&#243;n.</p>
-                        <ul class="mt-5 space-y-2">
+                        <ul class="mt-5 flex-1 space-y-2 text-sm md:text-base">
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">5+ almacenes, 20,000 SKUs</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">10+ usuarios y flujos de aprobaci&#243;n</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">Picking/packing y auditor&#237;a avanzada</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">M&#243;dulo de RFID (opcional)</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">Pron&#243;stico avanzado + optimizaci&#243;n de compras</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">SLA y soporte dedicado</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <i data-lucide="check" class="w-5 h-5 text-blue-300 shrink-0"></i>
+                                <i data-lucide="check" class="w-5 h-5 shrink-0 text-blue-300"></i>
                                 <span class="text-slate-100">Entorno de pruebas (sandbox)</span>
                             </li>
                         </ul>
-                        <a href="#contacto" class="mt-6 inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold bg-white text-slate-900 hover:bg-slate-200 transition">
+                        <a href="#contacto" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-semibold text-slate-900 hover:bg-slate-200 transition">
                             Hablar con ventas
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </article>
                 </div>
-
                 <div class="mt-14">
                     <h3 class="text-2xl font-bold">Adicionales</h3>
-                    <div class="mt-6 grid md:grid-cols-3 gap-6">
-                        <article class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+                    <div class="mt-6 grid gap-6 md:grid-cols-3">
+                        <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
                             <div class="flex items-center gap-2 text-blue-300">
                                 <i data-lucide="plug-zap" class="w-5 h-5"></i>
                                 <span class="font-semibold">Integraciones populares</span>
                             </div>
                             <p class="mt-2 text-slate-300">Shopify, WooCommerce, facturaci&#243;n electr&#243;nica y contabilidad. Mapea tus cat&#225;logos, impuestos y series.</p>
-                            <ul class="mt-3 text-slate-200 space-y-1 text-sm">
+                            <ul class="mt-3 space-y-1 text-sm text-slate-200">
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="check" class="w-4 h-4 text-blue-300"></i>
                                     Conectores 1-clic
@@ -260,13 +342,13 @@
                                 </li>
                             </ul>
                         </article>
-                        <article class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+                        <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
                             <div class="flex items-center gap-2 text-blue-300">
                                 <i data-lucide="qr-code" class="w-5 h-5"></i>
                                 <span class="font-semibold">RFID Kit (opcional)</span>
                             </div>
                             <p class="mt-2 text-slate-300">Lectura masiva para inventarios r&#225;pidos, puertas y racks. Ideal para alto volumen.</p>
-                            <ul class="mt-3 text-slate-200 space-y-1 text-sm">
+                            <ul class="mt-3 space-y-1 text-sm text-slate-200">
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="check" class="w-4 h-4 text-blue-300"></i>
                                     Tags UHF pasivos
@@ -281,13 +363,13 @@
                                 </li>
                             </ul>
                         </article>
-                        <article class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+                        <article class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
                             <div class="flex items-center gap-2 text-blue-300">
                                 <i data-lucide="zap" class="w-5 h-5"></i>
                                 <span class="font-semibold">Implementaci&#243;n + Capacitaci&#243;n</span>
                             </div>
                             <p class="mt-2 text-slate-300">Nos encargamos de todo: levantamiento, migraci&#243;n, configuraci&#243;n y entrenamiento. T&#250; te concentras en vender.</p>
-                            <ul class="mt-3 text-slate-200 space-y-1 text-sm">
+                            <ul class="mt-3 space-y-1 text-sm text-slate-200">
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="check" class="w-4 h-4 text-blue-300"></i>
                                     Kickoff y plan de cuentas
@@ -303,22 +385,21 @@
                             </ul>
                         </article>
                     </div>
-                    <p class="mt-4 text-slate-400 text-sm">
-                        Nota: las integraciones y RFID se cotizan seg&#250;n alcance. Podemos implementarlo todo por ti como servicio adicional.
-                    </p>
+                    <p class="mt-4 text-sm text-slate-400">Nota: las integraciones y RFID se cotizan seg&#250;n alcance. Podemos implementarlo todo por ti como servicio adicional.</p>
                 </div>
             </div>
         </section>
 
         <section class="max-w-7xl mx-auto px-6 py-12">
-            <div class="bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="flex flex-col gap-6 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 p-8 text-white shadow-lg md:flex-row md:items-center md:justify-between md:p-12">
                 <div>
                     <h3 class="text-2xl md:text-3xl font-bold">&#191;No quieres quebrarte la cabeza?</h3>
-                    <p class="mt-2 opacity-90 max-w-2xl">
-                        Te ofrecemos <strong>Implementaci&#243;n + Capacitaci&#243;n</strong>: levantamos procesos, migramos tus datos y dejamos todo listo para operar. T&#250; sigues vendiendo; nosotros nos encargamos del resto.
+                    <p class="mt-2 max-w-2xl opacity-90">
+                        Te ofrecemos <strong>Implementaci&#243;n + Capacitaci&#243;n</strong>: levantamos procesos, migramos tus datos y dejamos todo listo para operar.
+                        T&#250; sigues vendiendo; nosotros nos encargamos del resto.
                     </p>
                 </div>
-                <a href="#contacto" class="inline-flex items-center gap-2 bg-white text-slate-900 px-5 py-3 rounded-xl font-semibold shadow hover:shadow-lg transition">
+                <a href="#contacto" class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-semibold text-slate-900 shadow hover:shadow-lg transition">
                     Agendar evaluaci&#243;n
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
@@ -327,54 +408,53 @@
 
         <section class="max-w-7xl mx-auto px-6 py-12">
             <h2 class="text-3xl md:text-4xl font-bold">Preguntas frecuentes</h2>
-            <div class="mt-6 grid md:grid-cols-2 gap-6">
-                <article class="bg-white rounded-2xl p-6 border border-slate-100">
-                    <h4 class="font-semibold text-lg">&#191;Qu&#233; necesito para empezar?</h4>
+            <div class="mt-6 grid gap-6 md:grid-cols-2">
+                <article class="rounded-2xl border border-slate-100 bg-white p-6">
+                    <h4 class="text-lg font-semibold">&#191;Qu&#233; necesito para empezar?</h4>
                     <p class="mt-2 text-slate-600">Solo tu cat&#225;logo (nombre, SKU, unidad) y stocks iniciales por almac&#233;n. Desde ah&#237;, todo movimiento queda trazado.</p>
                 </article>
-                <article class="bg-white rounded-2xl p-6 border border-slate-100">
-                    <h4 class="font-semibold text-lg">&#191;C&#243;mo evitan los desfases entre sistema y f&#237;sico?</h4>
-                    <p class="mt-2 text-slate-600">Obligamos captura en origen (escaneo), ofrecemos conteo c&#237;clico ABC y mostramos un tablero de diferencias f&#237;sico&#8211;sistema para corregir r&#225;pido.</p>
+                <article class="rounded-2xl border border-slate-100 bg-white p-6">
+                    <h4 class="text-lg font-semibold">&#191;C&#243;mo evitan los desfases entre sistema y f&#237;sico?</h4>
+                    <p class="mt-2 text-slate-600">Obligamos captura en origen (escaneo), ofrecemos conteo c&#237;clico ABC y mostramos un tablero de diferencias f&#237;sico-sistema para corregir r&#225;pido.</p>
                 </article>
-                <article class="bg-white rounded-2xl p-6 border border-slate-100">
-                    <h4 class="font-semibold text-lg">&#191;La IA es un extra?</h4>
+                <article class="rounded-2xl border border-slate-100 bg-white p-6">
+                    <h4 class="text-lg font-semibold">&#191;La IA es un extra?</h4>
                     <p class="mt-2 text-slate-600">No. Viene incluida desde Starter con alertas y predicciones b&#225;sicas; en Growth/Pro ampliamos detecci&#243;n de anomal&#237;as y optimizaci&#243;n de compras.</p>
                 </article>
-                <article class="bg-white rounded-2xl p-6 border border-slate-100">
-                    <h4 class="font-semibold text-lg">&#191;Puedo seguir usando mi facturaci&#243;n o contabilidad actual?</h4>
+                <article class="rounded-2xl border border-slate-100 bg-white p-6">
+                    <h4 class="text-lg font-semibold">&#191;Puedo seguir usando mi facturaci&#243;n o contabilidad actual?</h4>
                     <p class="mt-2 text-slate-600">S&#237;. Tenemos API y conectores. Si prefieres, lo dejamos standalone y m&#225;s adelante lo integramos.</p>
                 </article>
-                <article class="bg-white rounded-2xl p-6 border border-slate-100">
-                    <h4 class="font-semibold text-lg">&#191;Ofrecen implementaci&#243;n llave en mano?</h4>
+                <article class="rounded-2xl border border-slate-100 bg-white p-6">
+                    <h4 class="text-lg font-semibold">&#191;Ofrecen implementaci&#243;n llave en mano?</h4>
                     <p class="mt-2 text-slate-600">S&#237;. Es un servicio adicional de implementaci&#243;n y capacitaci&#243;n. Agendamos visita, levantamos informaci&#243;n y en pocos d&#237;as quedas operando.</p>
                 </article>
             </div>
         </section>
-
-        <section id="contacto" class="bg-white border-t border-slate-100">
+        <section id="contacto" class="border-t border-slate-100 bg-white">
             <div class="max-w-7xl mx-auto px-6 py-12">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="grid gap-8 md:grid-cols-2 md:items-center">
                     <div>
                         <h2 class="text-3xl md:text-4xl font-bold">Agenda tu demo</h2>
-                        <p class="mt-2 text-slate-600">Conversemos 15 minutos para ver tu operaci&#243;n y dejarte el m&#243;dulo listo para pruebas hoy mismo.</p>
+                        <p class="mt-2 text-slate-600">Conversemos 15 minutos para conocer tu operaci&#243;n y dejarte el m&#243;dulo listo para pruebas hoy mismo.</p>
                         <div class="mt-6 flex flex-wrap gap-3">
-                            <a href="https://wa.me/TU_NUMERO" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800">
+                            <a href="https://wa.me/51924281623" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 font-semibold text-white hover:bg-slate-800">
                                 <i data-lucide="phone-call" class="w-4 h-4"></i>
                                 WhatsApp
                             </a>
-                            <a href="mailto:ventas@alfactor.com" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl ring-2 ring-slate-900 text-slate-900 font-semibold hover:bg-slate-50">
+                            <a href="mailto:alfactorconsultores@gmail.com" class="inline-flex items-center gap-2 rounded-xl px-5 py-3 font-semibold text-slate-900 ring-2 ring-slate-900 hover:bg-slate-50">
                                 <i class="fa-regular fa-envelope"></i>
                                 Escr&#237;benos
                             </a>
                         </div>
                     </div>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                    <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
                         <form class="grid grid-cols-1 gap-3">
-                            <input class="px-4 py-3 rounded-xl border border-slate-200" placeholder="Nombre y empresa" type="text">
-                            <input class="px-4 py-3 rounded-xl border border-slate-200" placeholder="Correo" type="email">
-                            <input class="px-4 py-3 rounded-xl border border-slate-200" placeholder="Tel&#233;fono" type="tel">
-                            <textarea class="px-4 py-3 rounded-xl border border-slate-200" placeholder="Cu&#233;ntanos tu volumen (almacenes, SKUs)" rows="4"></textarea>
-                            <button class="mt-2 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition" type="button">
+                            <input class="rounded-xl border border-slate-200 px-4 py-3" placeholder="Nombre y empresa" type="text">
+                            <input class="rounded-xl border border-slate-200 px-4 py-3" placeholder="Correo" type="email">
+                            <input class="rounded-xl border border-slate-200 px-4 py-3" placeholder="Tel&#233;fono" type="tel">
+                            <textarea class="rounded-xl border border-slate-200 px-4 py-3" placeholder="Cu&#233;ntanos tu volumen (almacenes, SKUs)" rows="4"></textarea>
+                            <button type="button" class="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 transition">
                                 Solicitar demo
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
@@ -384,9 +464,8 @@
             </div>
         </section>
     </main>
-
     <footer class="border-t border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-6 py-8 text-sm text-slate-600 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto flex flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-slate-600 md:flex-row">
             <div>&#169; <span id="current-year"></span> Alfactor. Todos los derechos reservados.</div>
             <div class="flex items-center gap-4">
                 <a href="#integraciones" class="hover:underline">Integraciones</a>
